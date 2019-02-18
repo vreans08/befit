@@ -1,0 +1,45 @@
+
+
+
+
+<div class="wrapper">
+    <div class="block-center mt-4 wd-xl">
+        <!-- START card-->
+        <div class="card card-flat">
+            <div class="card-header text-center bg-dark">
+                <a href="#">
+                    <!-- <img class="block-center rounded" src="assets/img/logo.png" alt="Image" /> -->
+                  <h3>BE FIT</h3> 
+                </a>
+            </div>
+            <div class="card-body">
+                <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
+                <div>
+                    <mat-form-field style="width:100%">
+                        <input [(ngModel)]="userName" matInput placeholder="Username" required>
+                    </mat-form-field>
+                    <mat-form-field style="width:100%">
+                        <input [(ngModel)]="password" matInput placeholder="Password" required>
+                    </mat-form-field>
+                    <!-- <mat-form-field style="width:100%">
+                        <input [(ngModel)]="role" matInput placeholder="Role" required>
+                    </mat-form-field> -->
+                    <mat-form-field style="width:100%">
+                        <mat-select placeholder="Select Your Role" [(ngModel)]="role" name="role" required>
+                          <mat-option *ngFor="let role of roles" [value]="role">
+                            {{role}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <div>
+                    <a [routerLink]="'/recover'">Forgot password</a>
+                </div>
+                <div style="margin-top: 20px;text-align: center">
+                    <button (click)="login()" mat-raised-button color="primary">Login</button>
+                </div>
+            </div>
+        </div>
+        <!-- END card-->
+    </div>
+</div>

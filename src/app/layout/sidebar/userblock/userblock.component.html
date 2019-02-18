@@ -1,0 +1,9 @@
+<div class="item user-block" *ngIf="userBlockIsVisible()">
+    <!-- User picture-->
+    <div class="user-block-info">
+        <span class="user-block-name">{{ 'sidebar.WELCOME' | translate  }} {{ user.firstName | titlecase }}  </span>
+        <span class="user-block-role">{{user.role | titlecase}}</span>
+        <span class="usernameMini">{{user.firstName | titlecase}}</span>
+    </div>
+
+</div>

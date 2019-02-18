@@ -1,0 +1,41 @@
+[
+    {
+        "userName": "venkatesh",
+        "password": "admin123",
+        "firstName":"Venkatesh",
+        "lastName":"Kannan",
+        "role": "admin",
+        "permissions": {
+            "routePermission": {
+                "adminhome": true
+            },
+            "functionalPermission": {}
+        }
+    },
+    {
+        "userName": "Rashmi",
+        "password": "rashmi123",
+        "firstName":"Rashmi",
+        "lastName":"Krishnan",
+        "role": "doctor",
+        "permissions": {
+            "routePermission": {
+                "doctorhome": true
+            },
+            "functionalPermission": {}
+        }
+    },
+    {
+        "userName": "Ramya",
+        "password": "ramya123",
+        "firstName":"Ramya",
+        "lastName":"Krishnan",
+        "role": "patient",
+        "permissions": {
+            "routePermission": {
+                "patienthome": true
+            },
+            "functionalPermission": {}
+        }
+    }
+]

@@ -1,0 +1,98 @@
+<div>
+  <div class="container-fluid">
+    <h4>ADD NEW {{role | uppercase}}</h4>
+    <div style="margin-top: 10px;" class="row">
+      <form name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="userName" matInput placeholder="User Name" [(ngModel)]="userName" #userName1="ngModel" required>
+          </mat-form-field>
+          <mat-error *ngIf="f.submitted && userName1.invalid">
+            <span *ngIf="userName1.errors.required">
+              User Name is required
+            </span>
+          </mat-error>
+
+        </div>
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="userId" matInput placeholder="User ID(Employee ID)" [(ngModel)]="userId" #userId1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && userId1.invalid">
+              <mat-error *ngIf="userId1.errors.required">
+                User ID is required
+              </mat-error>
+            </div>
+        </div>
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="role" matInput placeholder="Role" [(ngModel)]="role" disabled required>
+          </mat-form-field>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="firstName" matInput placeholder="First Name" [(ngModel)]="firstName"  #firstName1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && firstName1.invalid">
+              <mat-error *ngIf="firstName1.errors.required">
+                First name is required
+              </mat-error>
+            </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="lastName" matInput placeholder="Last Name" [(ngModel)]="lastName" #lastName1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && lastName1.invalid">
+              <mat-error *ngIf="lastName1.errors.required">
+                Last name is required
+              </mat-error>
+            </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="password" matInput placeholder="Password" [(ngModel)]="password" #password1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && password1.invalid">
+              <mat-error *ngIf="password1.errors.required">
+                Password is required
+              </mat-error>
+            </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="email" matInput placeholder="Email" [(ngModel)]="email" #email1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && email1.invalid">
+              <mat-error *ngIf="email1.errors.required">
+                Email is required
+              </mat-error>
+            </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="phone" matInput placeholder="Phone" [(ngModel)]="phone" #phone1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && phone1.invalid">
+              <mat-error *ngIf="phone1.errors.required">
+                Phone is required
+              </mat-error>
+            </div>
+        </div>
+        <div style="text-align: center">
+          <button style="margin-right: 10px;" mat-raised-button color="primary">Submit</button>
+          <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+
+
+
+  </div>
+</div>
