@@ -12,11 +12,13 @@ export class SuperadminhomeComponent implements OnInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'role', 'phone', 'email', 'resetRequired'];
   AdmindataSource: any;
   DoctordataSource:any;
+  PatientdataSource:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   doctorList: any;
   adminList: any;
+  patientList:any;
 
   constructor(public dialog: MatDialog, public addUser: AddUserService) { }
 
@@ -24,6 +26,8 @@ export class SuperadminhomeComponent implements OnInit {
    this.getAdminList();
    
    this.getDoctorList();
+
+   this.getPatientList();
   
   }
   getAdminList(){
@@ -33,7 +37,7 @@ export class SuperadminhomeComponent implements OnInit {
       this.AdmindataSource.sort = this.sort;
       console.log(this.adminList);
     });
-  }
+  };
   getDoctorList(){
     this.addUser.getDoctorList().subscribe(doctorlst => {
       this.doctorList = doctorlst;
@@ -41,14 +45,22 @@ export class SuperadminhomeComponent implements OnInit {
       this.DoctordataSource.sort = this.sort;
       console.log(this.doctorList);
     });
-  }
+  };
+  getPatientList(){
+    this.addUser.getPatientList().subscribe(patientList => {
+      this.patientList = patientList;
+      this.PatientdataSource = new MatTableDataSource(this.patientList);
+      this.PatientdataSource.sort = this.sort;
+      console.log(this.patientList);
+    });
+  };
   addAdmin(value) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.position = {
       'top': '10px'
 
     };
-    dialogConfig.width = "400px";
+    dialogConfig.width = "500px";
     dialogConfig.data = {
       role: value
     };
@@ -59,6 +71,7 @@ export class SuperadminhomeComponent implements OnInit {
         if (data == 'success') {
           this.getAdminList();
           this.getDoctorList();
+          this.getPatientList();
         }
 
       }
@@ -69,6 +82,9 @@ export class SuperadminhomeComponent implements OnInit {
   }
   applyDoctorFilter(filterValue: string) {
     this.DoctordataSource.filter = filterValue.trim().toLowerCase();
+  }
+  applyPatientFilter(filterValue: string) {
+    this.PatientdataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToasterModule } from 'angular2-toaster/angular2-toaster';
-
+import { NgxTreeDndModule } from 'ngx-tree-dnd'; 
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -70,6 +70,12 @@ import { LoginService } from './service/login.service';
 import { DataService } from './service/data.service';
 import { RoutepermissionService } from './service/routepermission.service';
 import { AddUserService } from './service/add-user.service';
+import { GetListService } from './service/get-list.service';
+import { FilterPipe } from './pipes/filter.pipe';
+import { ConsultationService } from './service/consultation.service';
+import { QuestionsService } from './service/questions.service';
+import { TreepatternComponent } from '../routes/treepattern/treepattern.component';
+import { QuestionloopComponent } from '../routes/questionloop/questionloop.component';
 // https://angular.io/styleguide#!#04-10
 @NgModule({
     imports: [
@@ -95,6 +101,7 @@ import { AddUserService } from './service/add-user.service';
         PopoverModule.forRoot(),
         TypeaheadModule.forRoot(),
         ToasterModule,
+        NgxTreeDndModule,
         // Material Modules
         MatAutocompleteModule,
         MatButtonModule,
@@ -134,7 +141,10 @@ import { AddUserService } from './service/add-user.service';
         LoginService,
         DataService,
         AddUserService,
-        RoutepermissionService
+        RoutepermissionService,
+        GetListService,
+        ConsultationService,
+        QuestionsService
     ],
     declarations: [
         FlotDirective,
@@ -142,15 +152,22 @@ import { AddUserService } from './service/add-user.service';
         EasypiechartDirective,
         CheckallDirective,
         VectormapDirective,
+        TreepatternComponent,
+        QuestionloopComponent,
         NowDirective,
         ScrollableDirective,
-        JqcloudDirective
+        JqcloudDirective,
+        FilterPipe
     ],
     exports: [
         CommonModule,
         FormsModule,
+        NgxTreeDndModule,
         ReactiveFormsModule,
         TranslateModule,
+        FilterPipe,
+        TreepatternComponent,
+        QuestionloopComponent,
         RouterModule,
         AccordionModule,
         AlertModule,

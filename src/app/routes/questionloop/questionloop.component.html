@@ -1,0 +1,5 @@
+<div style="margin-left:10px;border-left: 1px solid black" *ngFor="let childQuestion of children">
+    <h4  style="margin: 5px">{{childQuestion.name}}</h4>
+    <div *ngIf="childQuestion.childrens.length > 0">
+        <app-questionloop [children]="childQuestion.childrens"></app-questionloop>
+    </div></div>

@@ -12,8 +12,8 @@ export class SettingsService {
         // User Settings
         // -----------------------------------
         this.user = {
-            name: 'John',
-            job: 'ng-developer',
+            name: 'Admin',
+            job: 'admin',
             picture: 'assets/img/user/02.jpg'
         };
 
@@ -29,7 +29,7 @@ export class SettingsService {
         // -----------------------------------
         this.layout = {
             isFixed: true,
-            isCollapsed: false,
+            isCollapsed: true,
             isBoxed: false,
             isRTL: false,
             horizontal: false,

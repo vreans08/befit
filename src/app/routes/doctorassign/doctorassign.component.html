@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Assign a Doctor</h1>
+<div mat-dialog-content>
+  <h5><b>Patient Name:</b> {{data.patient.firstName + ' ' + data.patient.lastName | titlecase}} | <b>ID:</b> {{ data.patient.userId}}</h5>
+  <div style="text-align: center">
+      <mat-form-field>
+          <input matInput [(ngModel)]="filterText" placeholder="Filter">
+        </mat-form-field>
+  </div>
+ 
+  <mat-list *ngFor="let data of data.doctorList | filter : filterText">
+    <div mat-line>
+      <mat-radio-button (change)="radioChange(data)" color="primary" ><b>{{data.firstName + ' ' + data.lastName | titlecase}}</b></mat-radio-button>
+    </div>
+    <div style="display:inline-flex" mat-line>
+      <h5><strong>User ID:</strong> <span style="font-style: italic"> {{data.userId}}</span></h5>
+      <h5  style="margin-left:10px"><strong>Oppointment Inline:</strong>
+        <span style="font-style: italic"> <span *ngIf="data.nextInLine?.length > 0 && data.nextInLine[0] != 'NA'"> {{data.nextInLine?.length}} </span><span *ngIf="data.nextInLine[0] == 'NA'"> - </span> <span *ngIf="data.nextInLine?.length > 0">patient(s)</span></span></h5>
+    </div>
+
+    <mat-divider></mat-divider>
+  </mat-list>
+</div>
+<div style="margin-top: 20px;text-align: right;">
+  <button [disabled]="!selectedData" mat-raised-button color="primary" (click)="assign()" >Assign</button>
+</div>

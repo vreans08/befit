@@ -7,6 +7,12 @@ import { PagesModule } from './pages/pages.module';
 
 import { menu } from './menu';
 import { routes } from './routes';
+import { PatientmapComponent } from './patientmap/patientmap.component';
+import { AddquestionsComponent } from './addquestions/addquestions.component';
+import { DoctorFormComponent } from './doctor-form/doctor-form.component';
+import { DoctorassignComponent } from './doctorassign/doctorassign.component';
+import { TreepatternComponent } from './treepattern/treepattern.component';
+import { QuestionloopComponent } from './questionloop/questionloop.component';
 
 @NgModule({
     imports: [
@@ -14,10 +20,11 @@ import { routes } from './routes';
         RouterModule.forRoot(routes),
         PagesModule
     ],
-    declarations: [],
+    declarations: [PatientmapComponent, AddquestionsComponent, DoctorFormComponent, DoctorassignComponent],
     exports: [
-        RouterModule
-    ]
+        RouterModule,
+    ],
+    entryComponents: [DoctorassignComponent]
 })
 
 export class RoutesModule {

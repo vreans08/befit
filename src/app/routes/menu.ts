@@ -16,15 +16,43 @@ const patientHome = {
 const doctorHome = {
     text: 'Doctor Home',
     data : 'doctorHome',
-    link: '/app-doctorhome',
+    link: '/doctorhome',
     icon: 'icon-home',
+    authorized : false
+};
+const consultation = {
+    text: 'Consultation',
+    data : 'consultation',
+    link: '/doctorhome/consultation',
+    icon: 'fas fa-stethoscope',
     authorized : false
 };
 const adminHome = {
     text: 'Admin Home',
     data : 'adminHome',
-    link: '/app-adminhome',
+    link: '/adminHome',
     icon: 'icon-home',
+    authorized : false
+};
+const patientMap = {
+    text: 'Assign Patient',
+    data : 'assignPatient',
+    link: '/patientmap',
+    icon: 'fas fa-user-md',
+    authorized : false
+};
+const addQuestion = {
+    text: 'Add Questions',
+    data : 'addQuestions',
+    link: '/addquestions',
+    icon: 'far fa-edit',
+    authorized : false
+};
+const doctorForm = {
+    text: 'Doctor Form',
+    data : 'doctorForm',
+    link: '/doctorform',
+    icon: 'fab fa-wpforms',
     authorized : false
 };
 
@@ -39,5 +67,9 @@ export const menu = [
     superAdminHome,
     patientHome,
     adminHome,
-    doctorHome
+    doctorHome,
+    patientMap,
+    addQuestion,
+    doctorForm,
+    consultation
 ];

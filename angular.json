@@ -25,9 +25,10 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+             
             ],
             "styles": [
-             
+              "node_modules/ngx-tree-dnd/styles-tree-dnd.css" ,
               "src/styles.scss"
             ],
             "scripts": [

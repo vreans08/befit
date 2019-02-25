@@ -7,35 +7,30 @@ import { of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AddUserService { 
-
+export class GetListService {
   constructor(public _http:HttpClient) { }
 
 
-  addUser(data1) {
-    return this._http.post("http://localhost:5600/newUser",{
-      data1
-    }) .pipe(
-      tap(data => console.log(data)),
-      catchError(this.handleError('login', []))
-    )
-  }
-
-  getAdminList(){
-    return this._http.get("http://localhost:5600/admin") .pipe(
+  getDoctorList(){
+    return this._http.get("http://localhost:5600/doctorList") .pipe(
       tap(data => console.log(data)),
       catchError(this.handleError('login', []))
     ); 
   }
-
-  getDoctorList(){
-    return this._http.get("http://localhost:5600/doctor") .pipe(
+  postDoctorList(data){
+    return this._http.post("http://localhost:5600/doctorListUpdate",data) .pipe(
       tap(data => console.log(data)),
       catchError(this.handleError('login', []))
     ); 
   }
   getPatientList(){
-    return this._http.get("http://localhost:5600/patient") .pipe(
+    return this._http.get("http://localhost:5600/patientList") .pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError('login', []))
+    ); 
+  }
+  postPatientList(data){
+    return this._http.post("http://localhost:5600/patientListUpdate",data) .pipe(
       tap(data => console.log(data)),
       catchError(this.handleError('login', []))
     ); 
@@ -47,18 +42,5 @@ export class AddUserService {
       console.error(error);
       return of(result as T);
     };
-  }
-
-  getDoctorDetails(doctorID){
-    return this._http.post("http://localhost:5600/getDoctorDetails",{doctorID : doctorID}) .pipe(
-      tap(data => console.log(data)),
-      catchError(this.handleError('login', []))
-    ); 
-  }
-  getPatientDetails(patientID){
-    return this._http.post("http://localhost:5600/getPatientDetails",{patientID : patientID}) .pipe(
-      tap(data => console.log(data)),
-      catchError(this.handleError('login', []))
-    ); 
   }
 }

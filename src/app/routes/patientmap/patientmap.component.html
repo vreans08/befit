@@ -1,0 +1,60 @@
+<div class="container-fluid">
+  <div class="row">
+    <div style="margin-top: 10px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <h4 style="margin: 20px">Patients</h4>
+        <div style="margin: 20px">
+          <mat-form-field>
+            <input matInput (keyup)="applyPatientFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <table mat-table [dataSource]="PatientdataSource" multiTemplateDataRows class="mat-elevation-z8">
+            <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+              <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+              <td mat-cell *matCellDef="let element"> {{element[column]}}
+              </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="row example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                  <div style="margin-top:20px;" class="col-xl-12">
+                      <div>
+                        <h5 *ngIf="element.lastVisitedDate != 'NA'">Last Visited Date: {{element.lastVisitedDate}}</h5>
+                        <h5 *ngIf="element.lastVisitedDoctor != 'NA'">Last Visited Doctor:
+                          {{element.lastVisitedDoctor}}</h5>
+                        <h5 *ngIf="element.lastVisitedDate == 'NA'">NEW PATIENT</h5>
+                        <h5 *ngIf="element.nextAppointmentDate != 'NA'">Next Appointment Date:
+                          {{element.nextAppointmentDate}}</h5>
+                        <h5 *ngIf="element.nextAppointmentDoctor != 'NA'">Next Appointment Doctor:
+                          {{element.nextAppointmentDoctor}}</h5>
+                      </div>
+                  </div>
+                  <div style="margin:10px;text-align: center" class="col-xl-12">
+                    <button color="primary" mat-raised-button [matMenuTriggerFor]="menu">Assign</button>
+                    <mat-menu #menu="matMenu">
+                      <button  (click)="assignDoctor(element,'true')" [disabled]="element.lastVisitedDoctor == 'NA'"
+                        mat-menu-item>Assign Last Visited Doctor</button>
+                      <button (click)="assignDoctor(element,'false')" mat-menu-item>Assign a Doctor</button>
+                    </mat-menu>
+                  </div>
+                </div>
+                
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          </table>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

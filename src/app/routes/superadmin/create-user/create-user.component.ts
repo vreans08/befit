@@ -52,7 +52,6 @@ export class CreateUserComponent implements OnInit {
           [permissionKey]: true
         },
         functionalPermissions: {
-
         }
       }
     }).subscribe(userData => {
