@@ -9,22 +9,31 @@ import { menu } from './menu';
 import { routes } from './routes';
 import { PatientmapComponent } from './patientmap/patientmap.component';
 import { AddquestionsComponent } from './addquestions/addquestions.component';
-import { DoctorFormComponent } from './doctor-form/doctor-form.component';
 import { DoctorassignComponent } from './doctorassign/doctorassign.component';
 import { TreepatternComponent } from './treepattern/treepattern.component';
 import { QuestionloopComponent } from './questionloop/questionloop.component';
+import { DoctorModule } from './doctor/doctor.module';
+import { PatientModule } from './patient/patient.module';
+import { SuperadminModule } from './superadmin/superadmin.module';
+import { AdminModule } from './admin/admin.module';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { DeleteUserComponent } from './delete-user/delete-user.component';
 
 @NgModule({
     imports: [
         SharedModule,
         RouterModule.forRoot(routes),
-        PagesModule
+        PagesModule,
+        DoctorModule,
+        PatientModule,
+        SuperadminModule,
+        AdminModule
     ],
-    declarations: [PatientmapComponent, AddquestionsComponent, DoctorFormComponent, DoctorassignComponent],
+    declarations: [PatientmapComponent, AddquestionsComponent, DoctorassignComponent, EditUserComponent, DeleteUserComponent],
     exports: [
         RouterModule,
     ],
-    entryComponents: [DoctorassignComponent]
+    entryComponents: [DoctorassignComponent,DeleteUserComponent,EditUserComponent]
 })
 
 export class RoutesModule {

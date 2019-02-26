@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserblockService } from './userblock.service';
 import { DataService } from '../../../shared/service/data.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-userblock',
@@ -10,7 +11,7 @@ import { DataService } from '../../../shared/service/data.service';
 })
 export class UserblockComponent implements OnInit {
     user: any;
-    constructor(public userblockService: UserblockService,public dataService:DataService) {
+    constructor(public userblockService: UserblockService,public dataService:DataService,public router:Router) {
 
     }
 
@@ -27,4 +28,9 @@ export class UserblockComponent implements OnInit {
         return this.userblockService.getVisibility();
     }
 
+    logout(){
+        sessionStorage.removeItem('loginData');
+        sessionStorage.removeItem('mytree');
+        this.router.navigate(['/login'])
+    }
 }

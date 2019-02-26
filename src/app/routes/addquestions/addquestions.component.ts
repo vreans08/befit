@@ -10,11 +10,12 @@ export class AddquestionsComponent implements OnInit {
   title = 'Ngx-tree-dnd example';
   currentEvent: string = 'start do something';
   questions:Array<any> = [];
-  myTree:any;
+  myTree:any ;
   constructor(public  questionService:QuestionsService) { }
 
   ngOnInit() {
     this.questionService.getQuestions().subscribe(cons => {
+      console.log("Questions ",cons);
       this.myTree = JSON.parse(cons[0]["questions"]);
     })
 
@@ -76,7 +77,7 @@ export class AddquestionsComponent implements OnInit {
 
   save(){
       this.questionService.uploadQuestions({
-        questionID : 1,
+        questionID : "1",
         questions: JSON.stringify(this.myTree)
       }).subscribe(upload => {
         console.log(upload);

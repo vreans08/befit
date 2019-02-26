@@ -29,7 +29,7 @@ export class SettingsService {
         // -----------------------------------
         this.layout = {
             isFixed: true,
-            isCollapsed: true,
+            isCollapsed: false,
             isBoxed: false,
             isRTL: false,
             horizontal: false,

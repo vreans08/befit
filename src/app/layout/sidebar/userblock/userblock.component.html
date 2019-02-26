@@ -4,6 +4,9 @@
         <span class="user-block-name">{{ 'sidebar.WELCOME' | translate  }} {{ user.firstName | titlecase }}  </span>
         <span class="user-block-role">{{user.role | titlecase}}</span>
         <span class="usernameMini">{{user.firstName | titlecase}}</span>
+        <span class="usernameMini">{{user.role | titlecase}}</span>
     </div>
-
+    <div style="text-align: center">
+        <button (click)="logout()" class="btn btn-danger">Logout</button>
+    </div>
 </div>

@@ -6,41 +6,56 @@
           <mat-card-title>Patients In Line</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-              <div style="margin:0px 20px" class="row">
-                  <mat-card (click)="clickConsultation(patient)" style="margin-right:5px;" *ngFor="let patient of doctorDetails?.nextInLine" class="col-xl-2">
-                      <div>
-                        <h4 style="margin: 0px">{{patient.patientFirstName + ' '+ patient.patientLastName}}</h4>
-                        <p style="font-style: italic">User ID: {{patient.patientUserId}}</p>
-                      </div>
-                  </mat-card>
-                </div>
+          <div style="margin:0px 20px" class="row">
+            <mat-card (click)="clickConsultation(patient)" style="margin-right:5px;"
+              *ngFor="let patient of doctorDetails?.nextInLine" class="col-xl-2">
+              <div>
+                <h4 style="margin: 0px">{{patient.patientFirstName + ' '+ patient.patientLastName | titlecase}}</h4>
+                <p style="font-style: italic">User ID: {{patient.patientUserId}}</p>
+              </div>
+            </mat-card>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
     <div style="margin-top: 20px" class="col-xl-12">
-        <mat-card *ngIf="doctorDetails">
-          <mat-card-header>
-            <mat-card-title>Patient visit History</mat-card-title>
-          </mat-card-header>
-          <mat-card-content *ngIf="doctorDetails?.consultationHistory[0] != 'NA'">
-              <table mat-table [dataSource]="PatientdataSource"  class="mat-elevation-z8">
-                  <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-                    <td mat-cell *matCellDef="let element"> {{element[column]}}
-                    </td>
-                  </ng-container>
-      
-                  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                  
-      
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
-                    [class.example-expanded-row]="expandedElement === element" (click)="expandedElement = expandedElement === element ? null : element">
-                  </tr>
-                  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                </table>
-          </mat-card-content>
-        </mat-card>
-      </div>
+      <mat-card *ngIf="doctorDetails">
+        <mat-card-header>
+          <mat-card-title>Patient Visit History</mat-card-title>
+        </mat-card-header>
+        <mat-card-content *ngIf="doctorDetails?.consultationHistory[0] != 'NA'">
+          <div>
+              <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Filter by First Name" [(ngModel)]="filterData" >
+                </mat-form-field>
+          </div>
+          <div>
+            <mat-accordion>
+              <mat-expansion-panel style="margin-bottom: 5px;" *ngFor="let consultationHistory of doctorDetails?.consultationHistory | filter : filterData">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <b style="margin-right: 3px">Name: </b>
+                    {{ consultationHistory.firstName + ' '+ consultationHistory.lastName | titlecase}}
+                    <b style="margin: 0px 3px">User ID:</b> {{ consultationHistory.userId}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <b style="margin-right: 3px">Date: </b> {{ consultationHistory.lastVisitedDate}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div>
+                  <!-- <app-treepattern [myTreeData]="visit.questions"></app-treepattern> -->
+                  <div *ngFor="let question of consultationHistory.visitDetails.questions;let i=index">
+                    <h4 style="margin: 5px">{{i+1}}, {{question.name}}</h4>
+                    <div *ngIf="question.childrens.length > 0">
+                      <app-questionloop [children]="question.childrens"></app-questionloop>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 </div>

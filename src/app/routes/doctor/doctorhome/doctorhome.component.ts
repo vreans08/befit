@@ -11,43 +11,36 @@ import { Router } from '@angular/router';
 })
 export class DoctorhomeComponent implements OnInit {
 
-  doctorDetails:any;
-  displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'phone', 'email'];
-  PatientdataSource: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  doctorId:any = 1000;
+  doctorDetails: any;
+  doctorId: any = 1000;
+  filterData:any = '';
 
-  constructor(public addUser: AddUserService,public router:Router, public snackBar: MatSnackBar,public consultationService:ConsultationService ) { }
+  constructor(public addUser: AddUserService, public router: Router, public snackBar: MatSnackBar, public consultationService: ConsultationService) { }
 
   ngOnInit() {
-   
+
     this.getDoctorDetails();
     //this.getPatientDetails();
   }
-  getDoctorDetails(){
+  getDoctorDetails() {
     this.addUser.getDoctorDetails(this.doctorId).subscribe(data => {
-      this.doctorDetails = data[0];
+      let docDetails = data[0];
+      docDetails.consultationHistory.forEach(element => {
+        if(element != 'NA')
+        element.visitDetails.questions = JSON.parse(element.visitDetails.questions)
+      });
+      this.doctorDetails = docDetails;
       console.log(this.doctorDetails);
-      this.PatientdataSource = new MatTableDataSource(this.doctorDetails.consultationHistory);
-      this.PatientdataSource.sort = this.sort;
     });
   }
-  clickConsultation(patient)
-  {
+  clickConsultation(patient) {
     this.consultationService.setConsultation(patient);
+    this.consultationService.setConsultationDocotorDetails(this.doctorDetails);
     setTimeout(() => {
       this.router.navigate([
-        "doctorhome/consultation"
+        "/consultation"
       ])
-    }, 1000);
-  
-  }
-  // getPatientDetails() {
-  //   this.addUser.getPatientList().subscribe(patientList => {
-  //     this.patientList = patientList;
-  //     console.log(this.patientList);
-  //   });
-  // };
+    }, 300);
 
+  }
 }

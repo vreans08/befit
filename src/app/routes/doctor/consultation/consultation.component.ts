@@ -17,14 +17,15 @@ export class ConsultationComponent implements OnInit {
   consultationDetails: any;
   doctorDetails: any = {
     userId: 1000,
-    firstName: 'Krishnan',
+    firstName: 'Venkatesh',
     lastName: 'Narayanan'
   };
+  doctorHistoryDetails: any;
   consultationForm: boolean = true;
   title = 'Ngx-tree-dnd example';
   currentEvent: string = 'start do something';
   patientDetails: any;
-  postDoctorpatientDetails:any;
+  postDoctorpatientDetails: any;
   myTree: any;
   config = {
     showActionButtons: true,
@@ -49,9 +50,17 @@ export class ConsultationComponent implements OnInit {
         this.getQuestions()
       }
       else {
-        this.router.navigate(['/doctorhome'])
+        this.router.navigate(['/doctorhome']);
       }
-    })
+    });
+    this.consultationService.doctorConsultation.subscribe(data => {
+      if (data != 'NA') {
+        this.doctorHistoryDetails = data;
+      }
+      else {
+        this.router.navigate(['/doctorhome']);
+      }
+    });
   }
 
   ngOnInit() {
@@ -81,7 +90,7 @@ export class ConsultationComponent implements OnInit {
         element.questions = JSON.parse(element.questions);
       });
       this.patientDetails = details;
-      console.log('History questions',this.patientDetails.visitHistory);
+      console.log('History questions', this.patientDetails.visitHistory);
       console.log("Patient Details: ", details)
       this.questions.getQuestions().subscribe(cons => {
         console.log(cons);
@@ -93,29 +102,35 @@ export class ConsultationComponent implements OnInit {
   }
 
   delimitTree(treeData) {
-    for(let i=0;i < treeData.length;i++)
-    {
-      treeData[i].id = +(""+new Date().getTime()+i);
-      if(treeData[i].childrens.length > 0)
+    for (let i = 0; i < treeData.length; i++) {
+    //  treeData[i].id = +("" + new Date().getTime() + i);
+      if(treeData[i].name == 'ans')
       {
-        
-        this.loopLogic(i,0,treeData[i].childrens);
+        treeData[i].name = null;
+        treeData[i].options.edit = true;
+      }
+      if (treeData[i].childrens.length > 0) {
+
+        this.loopLogic(i, 0, treeData[i].childrens);
 
       }
     }
-    console.log('Form questions ',treeData);
+    console.log('Form questions ', treeData);
     return treeData;
   }
 
-  loopLogic(a,b,children){
-      for(let y =0;y< children.length;y++)
+  loopLogic(a, b, children) {
+    for (let y = 0; y < children.length; y++) {
+    //  children[y].id = +("" + new Date().getTime() + a + b);
+      if(children[y].name == 'ans')
       {
-        children[y].id = +(""+new Date().getTime()+a+b);
-        if(children[y].childrens.length > 0)
-        {
-          this.loopLogic(a,y,children[y].childrens);
-        }
+       children[y].name = null;
+       children[y].options.edit = true;
       }
+      if (children[y].childrens.length > 0) {
+        this.loopLogic(a, y, children[y].childrens);
+      }
+    }
   }
 
   onDragStart(event) {
@@ -157,9 +172,9 @@ export class ConsultationComponent implements OnInit {
   }
   Save() {
     let patientDetails = Object.assign({}, this.patientDetails);
-      patientDetails.visitHistory.forEach(elm => {
-        elm.questions = JSON.stringify(elm.questions);
-      })
+    patientDetails.visitHistory.forEach(elm => {
+      elm.questions = JSON.stringify(elm.questions);
+    })
     patientDetails.visitHistory.push({
       date: moment().format('YYYY-MM-DD'),
       Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
@@ -172,6 +187,9 @@ export class ConsultationComponent implements OnInit {
     this.postDoctorpatientDetails = {
       lastVisitedDate: patientDetails.lastVisitedDate,
       lastVisitedDoctor: patientDetails.lastVisitedDoctor,
+      firstName: patientDetails.firstName,
+      lastName: patientDetails.lastName,
+      userId: patientDetails.userId,
       visitDetails: {
         date: moment().format('YYYY-MM-DD'),
         Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
@@ -179,10 +197,31 @@ export class ConsultationComponent implements OnInit {
       }
     };
     this.updateUser.postPatientList(patientDetails).subscribe(data => {
-      this.snackBar.open("Form submitted successfully", '', {
-        duration: 2000
+
+      let doctorUpdateData = {};
+      console.log("Log data ", this.doctorHistoryDetails);
+      this.doctorHistoryDetails.consultationHistory.forEach(elmDoc => {
+        if(elmDoc != 'NA')
+        elmDoc.visitDetails.questions = JSON.stringify(elmDoc.visitDetails.questions);
+      })
+      if (this.doctorHistoryDetails.consultationHistory[0] == 'NA') {
+        this.doctorHistoryDetails.consultationHistory[0] = this.postDoctorpatientDetails;
+      }
+      else {
+        this.doctorHistoryDetails.consultationHistory.push(this.postDoctorpatientDetails);
+      }
+      let nextInLine = this.doctorHistoryDetails.nextInLine.filter(fil => {
+        return fil.patientUserId != patientDetails.userId
       });
-      this.router.navigate(['/doctorhome']);
+      this.doctorHistoryDetails.nextInLine = nextInLine;
+      console.log("Log data After ", this.doctorHistoryDetails);
+      this.updateUser.postDoctorList(this.doctorHistoryDetails).subscribe(docdata => {
+        this.snackBar.open("Form submitted successfully", '', {
+          duration: 2000
+        });
+        this.router.navigate(['/doctorhome']);
+      })
+
     })
 
 

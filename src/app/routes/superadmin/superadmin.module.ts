@@ -6,9 +6,6 @@ import { RoutepermissionService } from '../../shared/service/routepermission.ser
 import { SharedModule } from '../../shared/shared.module';
 import { CreateUserComponent } from './create-user/create-user.component';
 
-const routes: Routes = [
-  { path: '', component: SuperadminhomeComponent,canActivate: [RoutepermissionService], data: { route: "superAdminHome" },},
-];
 
 
 @NgModule({
@@ -16,7 +13,6 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
   ],
   entryComponents:[CreateUserComponent]
 })

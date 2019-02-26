@@ -9,8 +9,12 @@ import { Error404Component } from './pages/error404/error404.component';
 import { Error500Component } from './pages/error500/error500.component';
 import { PatientmapComponent } from './patientmap/patientmap.component';
 import { AddquestionsComponent } from './addquestions/addquestions.component';
-import { DoctorFormComponent } from './doctor-form/doctor-form.component';
 import { ConsultationComponent } from './doctor/consultation/consultation.component';
+import { RoutepermissionService } from '../shared/service/routepermission.service';
+import { SuperadminhomeComponent } from './superadmin/superadminhome/superadminhome.component';
+import { DoctorhomeComponent } from './doctor/doctorhome/doctorhome.component';
+import { PatienthomeComponent } from './patient/patienthome/patienthome.component';
+import { AdminhomeComponent } from './admin/adminhome/adminhome.component';
 
 export const routes = [
 
@@ -19,12 +23,15 @@ export const routes = [
         component: LayoutComponent,
         children: [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
-            {path: 'superadmin',loadChildren : './superadmin/superadmin.module#SuperadminModule'},
-            {path: 'doctorhome',loadChildren : './doctor/doctor.module#DoctorModule'},
-            {path: 'patientmap', component: PatientmapComponent},
-            {path:'doctorform',component: DoctorFormComponent},
-            {path:"addquestions",component: AddquestionsComponent}
-                ]
+            { path: 'superadmin', component: SuperadminhomeComponent,canActivate: [RoutepermissionService], data: { route: "superAdminHome" } },
+            { path: 'doctorhome', component : DoctorhomeComponent },
+            { path: 'patienthome', component: PatienthomeComponent },
+            { path: 'adminhome', component: AdminhomeComponent },
+            { path: 'patientmap', component: PatientmapComponent, canActivate: [RoutepermissionService], data: { route: "assignpatient" }, },
+            { path: "addquestions", component: AddquestionsComponent, canActivate: [RoutepermissionService], data: { route: "addquestions" }, },
+            { path: 'consultation', component: ConsultationComponent, canActivate: [RoutepermissionService], data: { route: "consultation" }, },
+
+        ]
     },
 
     // Not lazy-loaded routes

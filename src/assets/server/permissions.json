@@ -1,0 +1,14 @@
+{
+    "doctorPermissions": {
+        "routePermissions": {},
+        "functionalPermissions": {}
+    },
+    "patientPermissions": {
+        "routePermissions": {},
+        "functionalPermissions": {}
+    },
+    "adminPermissions": {
+        "routePermissions": {},
+        "functionalPermissions": {}
+    }
+}

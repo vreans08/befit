@@ -10,7 +10,7 @@ import { DataService } from './data.service';
 })
 export class RoutepermissionService {
 
-  constructor(public route: Router,public dataService:DataService) { }
+  constructor(public route: Router, public dataService: DataService) { }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -20,14 +20,19 @@ export class RoutepermissionService {
     console.log(route);
     console.log(state);
     console.log(loginData);
-    if (loginData["permissions"].routePermissions[route.data.route])
-    { 
-      this.dataService.setLoginData(loginData);
-      return true;
-    }
+    if (loginData)
+      if (loginData["permissions"].routePermissions[route.data.route]) {
+        this.dataService.setLoginData(loginData);
+        return true;
+      }
+      else
+        this.route.navigate([
+          "login"
+        ])
     else
       this.route.navigate([
         "login"
       ])
   }
+
 }

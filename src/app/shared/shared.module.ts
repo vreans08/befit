@@ -76,6 +76,7 @@ import { ConsultationService } from './service/consultation.service';
 import { QuestionsService } from './service/questions.service';
 import { TreepatternComponent } from '../routes/treepattern/treepattern.component';
 import { QuestionloopComponent } from '../routes/questionloop/questionloop.component';
+import { ConsultationComponent } from '../routes/doctor/consultation/consultation.component';
 // https://angular.io/styleguide#!#04-10
 @NgModule({
     imports: [
@@ -154,6 +155,7 @@ import { QuestionloopComponent } from '../routes/questionloop/questionloop.compo
         VectormapDirective,
         TreepatternComponent,
         QuestionloopComponent,
+        ConsultationComponent,
         NowDirective,
         ScrollableDirective,
         JqcloudDirective,
@@ -170,6 +172,7 @@ import { QuestionloopComponent } from '../routes/questionloop/questionloop.compo
         QuestionloopComponent,
         RouterModule,
         AccordionModule,
+        ConsultationComponent,
         AlertModule,
         ButtonsModule,
         CarouselModule,

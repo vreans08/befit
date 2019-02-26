@@ -2,8 +2,8 @@
     <div *ngIf="myTree" class="row">
         <div class="col-xl-12">
             <div>
-                <h4 style="margin:0px">Patient Name: {{patientDetails.firstName + ' '+ patientDetails.lastName }}</h4>
-                <p>Patiend User ID: {{patientDetails.userId}}</p>
+                <h4 style="margin:0px">Patient Name: {{patientDetails.firstName + ' '+ patientDetails.lastName | titlecase }}</h4>
+                <p>Patient User ID: {{patientDetails.userId}}</p>
             </div>
         </div>
         <div style="margin-top: 25px;" class="col-xl-12">

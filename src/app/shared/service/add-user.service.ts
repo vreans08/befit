@@ -19,6 +19,26 @@ export class AddUserService {
       tap(data => console.log(data)),
       catchError(this.handleError('login', []))
     )
+  };
+
+  editUser(data1)
+  {
+    return this._http.post("http://localhost:5600/editUser",{
+      data1
+    }) .pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError('login', []))
+    )
+  }
+
+  deleteUser(data1)
+  {
+    return this._http.post("http://localhost:5600/deleteUser",{
+      data1
+    }) .pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError('login', []))
+    )
   }
 
   getAdminList(){

@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ConsultationService {
 
   public consultation = new BehaviorSubject<any>('NA');
+  public doctorConsultation = new BehaviorSubject<any>('NA');
 
   constructor() {
 
@@ -19,4 +20,11 @@ export class ConsultationService {
   getConsultation(){
     return this.consultation;
   }
+  setConsultationDocotorDetails(data){
+    this.doctorConsultation.next(data);
+  }
+  getConsultationDocotorDetails(){
+    return this.consultation;
+  }
+  
 }

@@ -21,6 +21,48 @@ export class LoginService {
       catchError(this.handleError('login', []))
     )
   }
+
+  resetPassword(resetData){
+    return this._http.post("http://localhost:5600/resetPassword",resetData) .pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError('login', []))
+    )
+  }
+
+  roleLogin(userName,password,role) {
+    if(role == 'admin')
+    return this._http.post("http://localhost:5600/adminlogin",{
+      userName : userName,
+      password: password,
+      role: role
+    }) .pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError('login', []))
+    )
+    else if(role == 'doctor')
+    {
+      return this._http.post("http://localhost:5600/doctorlogin",{
+        userName : userName,
+        password: password,
+        role: role
+      }) .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('login', []))
+      )
+    }
+    else if(role == 'patient')
+    {
+      return this._http.post("http://localhost:5600/patientlogin",{
+        userName : userName,
+        password: password,
+        role: role
+      }) .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('login', []))
+      )
+    }
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

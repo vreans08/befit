@@ -34,6 +34,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
                    {
                        element.authorized = true;
                    }
+                   else
+                   {
+                    element.authorized = false;
+                   }
                 });
                 console.log(this.menuItems);
             }

@@ -1,0 +1,115 @@
+<form style="width: 100%" name="form" (ngSubmit)="f.form.valid && save()" #f="ngForm" novalidate>
+  <div>
+    <div>
+      <h4 mat-dialog-title>EDIT {{editData.role | uppercase}}</h4>
+      <div mat-dialog-content style="margin-top: 10px;" class="row">
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="userName" matInput placeholder="User Name" disabled [(ngModel)]="editData.userName" #userName1="ngModel"
+              required>
+          </mat-form-field>
+          <mat-error *ngIf="f.submitted && userName1.invalid">
+            <span *ngIf="userName1.errors.required">
+              User Name is required
+            </span>
+          </mat-error>
+
+        </div>
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="userId" matInput disabled placeholder="User ID(Employee ID)" [(ngModel)]="editData.userId"
+              #userId1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && userId1.invalid">
+            <mat-error *ngIf="userId1.errors.required">
+              User ID is required
+            </mat-error>
+          </div>
+        </div>
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="role" matInput placeholder="Role" [(ngModel)]="editData.role" disabled required>
+          </mat-form-field>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="firstName" matInput placeholder="First Name" [(ngModel)]="editData.firstName"
+              #firstName1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && firstName1.invalid">
+            <mat-error *ngIf="firstName1.errors.required">
+              First name is required
+            </mat-error>
+          </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="lastName" matInput placeholder="Last Name" [(ngModel)]="editData.lastName" #lastName1="ngModel"
+              required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && lastName1.invalid">
+            <mat-error *ngIf="lastName1.errors.required">
+              Last name is required
+            </mat-error>
+          </div>
+        </div>
+
+        <!-- <div style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="password" matInput placeholder="Password" [(ngModel)]="password" #password1="ngModel" required>
+            </mat-form-field>
+            <div *ngIf="f.submitted && password1.invalid">
+              <mat-error *ngIf="password1.errors.required">
+                Password is required
+              </mat-error>
+            </div>
+          </div> -->
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="email" matInput placeholder="Email" [(ngModel)]="editData.email" #email1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && email1.invalid">
+            <mat-error *ngIf="email1.errors.required">
+              Email is required
+            </mat-error>
+          </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-form-field style="width:100%">
+            <input name="phone" matInput placeholder="Phone" [(ngModel)]="editData.phone" #phone1="ngModel" required>
+          </mat-form-field>
+          <div *ngIf="f.submitted && phone1.invalid">
+            <mat-error *ngIf="phone1.errors.required">
+              Phone is required
+            </mat-error>
+          </div>
+        </div>
+
+        <div style="width:100%">
+          <mat-slide-toggle [labelPosition]="'before'" [checked]="editData.resetRequired" (toggleChange)="editData.resetRequired = !editData.resetRequired">Reset Required</mat-slide-toggle>
+          <a  style="margin-left: 5px" *ngIf="editData.resetRequired" mat-button (click)="generatePassword()" color="warn">Generate Password</a>
+        </div>
+
+        <div *ngIf="randomPassword && editData.resetRequired" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="password" matInput placeholder="Password" [(ngModel)]="randomPassword" #password1="ngModel" required>
+            </mat-form-field>
+          </div>
+        
+      </div>
+
+
+
+
+    </div>
+  </div>
+  <div mat-dialog-actions style="text-align: center">
+    <button style="margin-right: 10px;" mat-raised-button color="primary">Submit</button>
+    <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+  </div>
+</form>
