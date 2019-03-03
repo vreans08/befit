@@ -54,6 +54,7 @@ export class ConsultationComponent implements OnInit {
   consultationSummary:any;
   doctorHistoryDetails: any;
   consultationForm: boolean = true;
+  typeSelection:any;
   title = 'Ngx-tree-dnd example';
   currentEvent: string = 'start do something';
   patientDetails: any;
@@ -306,15 +307,11 @@ export class ConsultationComponent implements OnInit {
   }
 
   savePres(data, index) {
+    console.log("Type: ",this.typeSelection);
     let PrecsType;
     let totalTablets;
-    data.type.forEach(element => {
-      if (element.selected) {
-        PrecsType = element.name
-      }
-    });
 
-    if (PrecsType == 'Tablet') {
+    if (this.typeSelection.name == 'Tablet') {
 
       totalTablets = data.days * ((data.breakfast.value ? 1 : 0) + (data.lunch.value ? 1 : 0) + (data.evening.value ? 1 : 0) + (data.dinner.value ? 1 : 0))
     }
@@ -327,7 +324,7 @@ export class ConsultationComponent implements OnInit {
   }
   deletePres(data, index) {
     this.prescription.splice(index, 1);
-  }
+  } 
 
   typeChanged(typeindex,index){
     this.prescription[index].type[typeindex].selected = !this.prescription[index].type[typeindex].selected

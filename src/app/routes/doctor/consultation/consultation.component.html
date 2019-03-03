@@ -72,9 +72,9 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <mat-radio-group *ngFor="let type of pres.type;let j = index">
-                                                    <mat-radio-button style="display: block" (change)="typeChanged(j,i)"
-                                                        [value]="type.selected">{{type.name}}
+                                                <mat-radio-group [(ngModel)]="typeSelection">
+                                                    <mat-radio-button *ngFor="let type of pres.type;let j = index" style="display: block" 
+                                                        [value]="type">{{type.name}}
                                                     </mat-radio-button>
                                                 </mat-radio-group>
                                             </div>
