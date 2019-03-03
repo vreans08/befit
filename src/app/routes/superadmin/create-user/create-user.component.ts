@@ -19,7 +19,20 @@ export class CreateUserComponent implements OnInit {
   public password: any;
   public email: any;
   public phone: any;
-
+  public adminPermission = {
+    "adminhome": true, 
+    "assignpatient": true, 
+    "addquestions": true
+  }
+  public doctorPermissions = { 
+    "doctorhome": true, 
+    "assignpatient": true, 
+    "addquestions": true, 
+    "consultation": true 
+  };
+  public patientPermissions = { 
+    "patienthome": true 
+  };
   public doctorList; patientList: any; adminList: any;
 
 
@@ -53,26 +66,27 @@ export class CreateUserComponent implements OnInit {
       console.log("Item Exist: ", ItemsFound)
     }
     else if (this.role == 'patient') {
-    ItemsFound = this.patientList.filter(elmnt => {
+      ItemsFound = this.patientList.filter(elmnt => {
         return (elmnt.userName == this.userName || elmnt.userId == this.userId)
       });
       console.log("Item Exist: ", ItemsFound)
     }
 
 
-    if(ItemsFound.length > 0)
-    {
-      this.snackBar.open("UserName/UserID already taken. Please enter some other UserName/UserID",'',{
+    if (ItemsFound.length > 0) {
+      this.snackBar.open("UserName/UserID already taken. Please enter some other UserName/UserID", '', {
         duration: 2000
       })
     }
-    else
-    {
+    else {
       let permissionKey;
-      if (this.role == 'admin')
-        permissionKey = 'adminhome';
+      if (this.role == 'admin') {
+        permissionKey = this.adminPermission;
+      }
+      else if (this.role == "doctor")
+        permissionKey = this.doctorPermissions;
       else
-        permissionKey = 'doctorhome';
+        permissionKey = this.patientPermissions;
       this.adduser.addUser({
         userName: this.userName,
         userId: this.userId,
@@ -84,9 +98,7 @@ export class CreateUserComponent implements OnInit {
         phone: this.phone,
         resetRequired: true,
         permissions: {
-          routePermissions: {
-            [permissionKey]: true
-          },
+          routePermissions: permissionKey,
           functionalPermissions: {
           }
         }

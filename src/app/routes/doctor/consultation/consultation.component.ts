@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ConsultationService } from '../../../shared/service/consultation.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { AddUserService } from '../../../shared/service/add-user.service';
 import { QuestionsService } from '../../../shared/service/questions.service';
 import { GetListService } from '../../../shared/service/get-list.service';
 import { MatSnackBar } from '@angular/material';
+import { DataService } from '../../../shared/service/data.service';
+import { PromiseType } from 'protractor/built/plugins';
 
 @Component({
   selector: 'app-consultation',
@@ -15,11 +18,40 @@ import { MatSnackBar } from '@angular/material';
 export class ConsultationComponent implements OnInit {
 
   consultationDetails: any;
-  doctorDetails: any = {
-    userId: 1000,
-    firstName: 'Venkatesh',
-    lastName: 'Narayanan'
-  };
+  loginData: any;
+  prescription: Array<any> = [{
+    name: "",
+    type: [
+      {
+        name: "Tonic",
+        selected: false
+      },
+      {
+        name: "Tablet",
+        selected: false
+      }
+    ],
+    days: 0,
+    breakfast: {
+      value: false,
+      time: ""
+    },
+    lunch: {
+      value: false,
+      time: ""
+    },
+    evening: {
+      value: false,
+      time: ""
+    },
+    dinner: {
+      value: false,
+      time: ""
+    },
+    total: 0
+  }];
+  doctorDetails: any = {};
+  consultationSummary:any;
   doctorHistoryDetails: any;
   consultationForm: boolean = true;
   title = 'Ngx-tree-dnd example';
@@ -42,7 +74,7 @@ export class ConsultationComponent implements OnInit {
     setFontSize: 20,
     setIconSize: 13
   };
-  constructor(public consultationService: ConsultationService, public snackBar: MatSnackBar, public adduser: AddUserService, public router: Router, public questions: QuestionsService, public updateUser: GetListService) {
+  constructor(public consultationService: ConsultationService, public dataService: DataService, public snackBar: MatSnackBar, public adduser: AddUserService, public router: Router, public questions: QuestionsService, public updateUser: GetListService) {
     this.consultationService.consultation.subscribe(data => {
       if (data != 'NA') {
         this.consultationDetails = data;
@@ -64,7 +96,17 @@ export class ConsultationComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.dataService.loginData.subscribe(dra => {
+      if (dra) {
+        this.loginData = dra;
+        this.doctorDetails = {
+          userId: dra["userId"],
+          firstName: dra["firstName"],
+          lastName: dra["lastName"]
+        };
+        console.log("Login Data: ", this.loginData);
+      }
+    });
 
   }
 
@@ -103,9 +145,8 @@ export class ConsultationComponent implements OnInit {
 
   delimitTree(treeData) {
     for (let i = 0; i < treeData.length; i++) {
-    //  treeData[i].id = +("" + new Date().getTime() + i);
-      if(treeData[i].name == 'ans')
-      {
+      //  treeData[i].id = +("" + new Date().getTime() + i);
+      if (treeData[i].name == 'ans') {
         treeData[i].name = null;
         treeData[i].options.edit = true;
       }
@@ -121,11 +162,10 @@ export class ConsultationComponent implements OnInit {
 
   loopLogic(a, b, children) {
     for (let y = 0; y < children.length; y++) {
-    //  children[y].id = +("" + new Date().getTime() + a + b);
-      if(children[y].name == 'ans')
-      {
-       children[y].name = null;
-       children[y].options.edit = true;
+      //  children[y].id = +("" + new Date().getTime() + a + b);
+      if (children[y].name == 'ans') {
+        children[y].name = null;
+        children[y].options.edit = true;
       }
       if (children[y].childrens.length > 0) {
         this.loopLogic(a, y, children[y].childrens);
@@ -178,7 +218,9 @@ export class ConsultationComponent implements OnInit {
     patientDetails.visitHistory.push({
       date: moment().format('YYYY-MM-DD'),
       Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
-      questions: JSON.stringify(this.myTree)
+      questions: JSON.stringify(this.myTree),
+      consultationSummary : this.consultationSummary,
+      prescription: this.prescription
     });
     patientDetails.lastVisitedDate = moment().format('YYYY-MM-DD');
     patientDetails.nextAppointmentDate = 'NA';
@@ -193,7 +235,9 @@ export class ConsultationComponent implements OnInit {
       visitDetails: {
         date: moment().format('YYYY-MM-DD'),
         Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
-        questions: JSON.stringify(this.myTree)
+        questions: JSON.stringify(this.myTree),
+        consultationSummary : this.consultationSummary,
+        prescription: this.prescription
       }
     };
     this.updateUser.postPatientList(patientDetails).subscribe(data => {
@@ -201,8 +245,8 @@ export class ConsultationComponent implements OnInit {
       let doctorUpdateData = {};
       console.log("Log data ", this.doctorHistoryDetails);
       this.doctorHistoryDetails.consultationHistory.forEach(elmDoc => {
-        if(elmDoc != 'NA')
-        elmDoc.visitDetails.questions = JSON.stringify(elmDoc.visitDetails.questions);
+        if (elmDoc != 'NA')
+          elmDoc.visitDetails.questions = JSON.stringify(elmDoc.visitDetails.questions);
       })
       if (this.doctorHistoryDetails.consultationHistory[0] == 'NA') {
         this.doctorHistoryDetails.consultationHistory[0] = this.postDoctorpatientDetails;
@@ -225,5 +269,67 @@ export class ConsultationComponent implements OnInit {
     })
 
 
+  }
+
+  prescriptionNewLine() {
+    this.prescription.push({
+      name: "",
+      type: [
+        {
+          name: "Tonic",
+          selected: false
+        },
+        {
+          name: "Tablet",
+          selected: false
+        }
+      ],
+      days: 0,
+      breakfast: {
+        value: false,
+        time: ""
+      },
+      lunch: {
+        value: false,
+        time: ""
+      },
+      evening: {
+        value: false,
+        time: ""
+      },
+      dinner: {
+        value: false,
+        time: ""
+      },
+      total: 0
+    })
+  }
+
+  savePres(data, index) {
+    let PrecsType;
+    let totalTablets;
+    data.type.forEach(element => {
+      if (element.selected) {
+        PrecsType = element.name
+      }
+    });
+
+    if (PrecsType == 'Tablet') {
+
+      totalTablets = data.days * ((data.breakfast.value ? 1 : 0) + (data.lunch.value ? 1 : 0) + (data.evening.value ? 1 : 0) + (data.dinner.value ? 1 : 0))
+    }
+    else
+    {
+      totalTablets = '-';
+    }
+    this.prescription[index].total = totalTablets;
+
+  }
+  deletePres(data, index) {
+    this.prescription.splice(index, 1);
+  }
+
+  typeChanged(typeindex,index){
+    this.prescription[index].type[typeindex].selected = !this.prescription[index].type[typeindex].selected
   }
 }

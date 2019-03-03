@@ -9,11 +9,10 @@ import { CreateUserComponent } from './create-user/create-user.component';
 
 
 @NgModule({
-  declarations: [SuperadminhomeComponent, CreateUserComponent],
+  declarations: [SuperadminhomeComponent ],
   imports: [
     CommonModule,
     SharedModule,
-  ],
-  entryComponents:[CreateUserComponent]
+  ]
 })
 export class SuperadminModule { }

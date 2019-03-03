@@ -1,3 +1,131 @@
-<p>
-  adminhome works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <button mat-raised-button [matMenuTriggerFor]="menu">Add</button>
+      <mat-menu #menu="matMenu">
+        <button (click)="addAdmin('doctor')" mat-menu-item>New Doctor</button>
+        <button (click)="addAdmin('patient')" mat-menu-item>New Patient</button>
+      </mat-menu>
+    </div>
+    <div style="margin-top: 10px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <h4 style="margin: 20px">Doctor users</h4>
+        <div style="margin: 20px">
+          <mat-form-field>
+            <input matInput (keyup)="applyDoctorFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <table mat-table [dataSource]="DoctordataSource" matSort class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="userId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="userName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> first Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+              <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone </th>
+              <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="resetRequired">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Reset Required </th>
+              <td mat-cell *matCellDef="let element"> {{element.resetRequired}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let element"><button style="margin-left: 5px" color="primary" (click)="editUser(element)" mat-raised-button>Edit</button> </td>
+              </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 10px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <h4 style="margin: 20px">Patients</h4>
+        <div style="margin: 20px">
+          <mat-form-field>
+            <input matInput (keyup)="applyPatientFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+        </div>
+        <div>
+          <table mat-table [dataSource]="PatientdataSource" matSort class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="userId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="userName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> first Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="role">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+              <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+            </ng-container>
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone </th>
+              <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="resetRequired">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Reset Required </th>
+              <td mat-cell *matCellDef="let element"> {{element.resetRequired}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                <td mat-cell *matCellDef="let element"><button style="margin-left: 5px" color="primary" (click)="editUser(element)" mat-raised-button>Edit</button> </td>
+              </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

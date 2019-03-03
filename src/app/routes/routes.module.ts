@@ -18,6 +18,7 @@ import { SuperadminModule } from './superadmin/superadmin.module';
 import { AdminModule } from './admin/admin.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
+import { CreateUserComponent } from './superadmin/create-user/create-user.component';
 
 @NgModule({
     imports: [
@@ -29,11 +30,11 @@ import { DeleteUserComponent } from './delete-user/delete-user.component';
         SuperadminModule,
         AdminModule
     ],
-    declarations: [PatientmapComponent, AddquestionsComponent, DoctorassignComponent, EditUserComponent, DeleteUserComponent],
+    declarations: [PatientmapComponent,CreateUserComponent, AddquestionsComponent, DoctorassignComponent, EditUserComponent, DeleteUserComponent],
     exports: [
         RouterModule,
     ],
-    entryComponents: [DoctorassignComponent,DeleteUserComponent,EditUserComponent]
+    entryComponents: [DoctorassignComponent,DeleteUserComponent,EditUserComponent,CreateUserComponent]
 })
 
 export class RoutesModule {

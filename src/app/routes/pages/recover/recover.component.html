@@ -3,29 +3,14 @@
         <!-- START card-->
         <div class="card card-flat">
             <div class="card-header text-center bg-dark">
-                <a href="#">
-                    <img class="block-center rounded" src="assets/img/logo.png" alt="Image" />
+                <a>
+                  <h3 style="color:#FFEB3B;">BeFIT</h3> 
                 </a>
             </div>
             <div class="card-body">
                 <p class="text-center py-2">PASSWORD RESET</p>
-                <form [formGroup]="valForm" class="form-validate" role="form" name="recoverForm" novalidate="" (submit)="submitForm($event, valForm.value)">
-                    <p class="text-center">Fill with your mail to receive instructions on how to reset your password.</p>
-                    <div class="form-group">
-                        <label class="text-muted">Email address</label>
-                        <div class="input-group with-focus">
-                            <input class="form-control border-right-0" type="email" name="email" placeholder="Enter email" autocomplete="off" formControlName="email" />
-                            <div class="input-group-append">
-                                <span class="input-group-text text-muted bg-transparent border-left-0">
-                                    <em class="fa fa-envelope"></em>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="text-danger" *ngIf="valForm.controls['email'].hasError('required') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">This field is required</div>
-                        <div class="text-danger" *ngIf="valForm.controls['email'].hasError('email') && (valForm.controls['email'].dirty || valForm.controls['email'].touched)">This field must be a valid email address</div>
-                    </div>
-                    <button class="btn btn-danger btn-block" type="submit">Reset</button>
-                </form>
+               <h4>Please contact the front desk to reset your password.</h4>
+               <h4>Contact: <a href="tel:9962208554">9962208554</a></h4>
             </div>
         </div>
         <!-- END card-->

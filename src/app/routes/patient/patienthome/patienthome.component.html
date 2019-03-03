@@ -1,3 +1,147 @@
-<p>
-  patienthome works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <mat-card *ngIf="patientDetails" style="margin-bottom: 20px">
+        <div class="row">
+          <div class="col-xl-4">
+            <h5>First Name: <b>{{patientDetails.firstName}}</b></h5>
+          </div>
+          <div class="col-xl-4">
+            <h5>User Name: <b>{{patientDetails.userName}}</b></h5>
+          </div>
+          <div class="col-xl-4">
+            <h5>User ID: <b>{{patientDetails.userId}}</b></h5>
+          </div>
+          <div class="col-xl-4">
+            <h5>Last Name: <b>{{patientDetails.lastName}}</b></h5>
+          </div>
+          <div class="col-xl-4">
+            <h5>Email: <b>{{patientDetails.email}}</b></h5>
+          </div>
+          <div class="col-xl-4">
+            <h5>Phone: <b>{{patientDetails.phone}}</b></h5>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-xl-12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Visit History</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div>
+            <mat-accordion>
+              <mat-expansion-panel style="margin-bottom: 5px;"
+                *ngFor="let visit of patientDetails?.visitHistory;let i = index">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    {{visit.date}}
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    {{visit.Doctor}}
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div id="printDiv{{i}}">
+                  <div>
+                    <h3>Consultation Questions</h3>
+                    <div *ngFor="let question of visit.questions;let i=index">
+                      <h4 style="margin: 5px">{{i+1}}, {{question.name}}</h4>
+                      <div *ngIf="question.childrens.length > 0">
+                        <app-questionloop [children]="question.childrens"></app-questionloop>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin:25px 0px">
+                    <h3>Consultation Summary</h3>
+                    <div>
+                      <mat-form-field disabled="true" [style.fontSize]="'20px'" style="width:100%">
+                        <textarea disabled="true" [(ngModel)]="visit.consultationSummary" matInput cdkTextareaAutosize
+                          #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div style="margin:25px 0px">
+                    <h3>Prescription</h3>
+                    <div>
+                      <table class="table table-striped table-responsive">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Days</th>
+                            <th style="text-align: center">Breakfast</th>
+                            <th style="text-align: center">Lunch</th>
+                            <th style="text-align: center">Evening</th>
+                            <th style="text-align: center">Dinner</th>
+                            <th>Total Tablets</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let pres of visit.prescription;let i = index">
+                            <td scope="row">
+                              {{i+1}}.
+                            </td>
+                            <td>
+                              {{pres.name}}
+                            </td>
+                            <td>
+                              <div *ngFor="let type of pres.type;let j = index">
+                                <div *ngIf="type.selected">
+                                  {{type.name}}
+                                </div>
+                              </div>
+                            </td>
+                            <td>
+                              {{pres.days}} day(s)
+                            </td>
+                            <td>
+                              <div style="text-align: center">
+                                <mat-checkbox disabled="true" [(ngModel)]="pres.breakfast.value">
+                                  {{pres.breakfast.time}}</mat-checkbox>
+                              </div>
+                            </td>
+                            <td>
+                              <div style="text-align: center">
+                                <mat-checkbox disabled="true" [(ngModel)]="pres.lunch.value">{{pres.lunch.time}}
+                                </mat-checkbox>
+
+                              </div>
+                            </td>
+                            <td>
+                              <div style="text-align: center">
+                                <mat-checkbox disabled="true" [(ngModel)]="pres.evening.value">{{pres.evening.time}}
+                                </mat-checkbox>
+
+                              </div>
+                            </td>
+                            <td>
+                              <div style="text-align: center">
+                                <mat-checkbox disabled="true" [(ngModel)]="pres.dinner.value">{{pres.dinner.time}}
+                                </mat-checkbox>
+
+                              </div>
+                            </td>
+                            <td>
+                              {{pres.total}}
+                            </td>
+
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+    </div>
+  </div>
+</div>

@@ -2,7 +2,8 @@
     <div *ngIf="myTree" class="row">
         <div class="col-xl-12">
             <div>
-                <h4 style="margin:0px">Patient Name: {{patientDetails.firstName + ' '+ patientDetails.lastName | titlecase }}</h4>
+                <h4 style="margin:0px">Patient Name:
+                    {{patientDetails.firstName + ' '+ patientDetails.lastName | titlecase }}</h4>
                 <p>Patient User ID: {{patientDetails.userId}}</p>
             </div>
         </div>
@@ -15,14 +16,143 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div style="margin-bottom: 20px;">
-                        <lib-ngx-tree-component [treeData]="myTree" (ondragstart)="onDragStart($event)" (ondragenter)="onDragEnter($event)"
-                            (ondragleave)="onDragLeave($event)" (ondrop)="onDrop($event)" (onallowdrop)="onAllowDrop($event)"
+                        <h3>Consultation Questions</h3>
+                        <lib-ngx-tree-component [treeData]="myTree" (ondragstart)="onDragStart($event)"
+                            (ondragenter)="onDragEnter($event)" (ondragleave)="onDragLeave($event)"
+                            (ondrop)="onDrop($event)" (onallowdrop)="onAllowDrop($event)"
                             (onadditem)="onAddItem($event)" (onStartDeleteItem)="onStartDeleteItem($event)"
-                            (onFinishDeleteItem)="onFinishDeleteItem($event)" (onCancelDeleteItem)="onCancelDeleteItem($event)"
-                            (onStartRenameItem)="onStartRenameItem($event)" (onFinishRenameItem)="onFinishRenameItem($event)"
-                            [config]='config'></lib-ngx-tree-component>
-                            
+                            (onFinishDeleteItem)="onFinishDeleteItem($event)"
+                            (onCancelDeleteItem)="onCancelDeleteItem($event)"
+                            (onStartRenameItem)="onStartRenameItem($event)"
+                            (onFinishRenameItem)="onFinishRenameItem($event)" [config]='config'>
+                        </lib-ngx-tree-component>
 
+
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div style="margin:20px 0px">
+                        <h3>Consultation Summary</h3>
+                        <mat-form-field [style.fontSize]="'20px'" style="width:100%">
+                            <textarea [(ngModel)]="consultationSummary" matInput cdkTextareaAutosize
+                                #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"
+                                placeholder="Please type the summary here"></textarea>
+                        </mat-form-field>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div style="margin:20px 0px">
+                        <h3>Prescription</h3>
+
+
+
+                        <div>
+                            <table class="table table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Days</th>
+                                        <th style="text-align: center">Breakfast</th>
+                                        <th style="text-align: center">Lunch</th>
+                                        <th style="text-align: center">Evening</th>
+                                        <th style="text-align: center">Dinner</th>
+                                        <th>Total Tablets</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let pres of prescription;let i = index">
+                                        <td scope="row">
+                                            {{i+1}}.
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Name" [(ngModel)]="pres.name">
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <mat-radio-group *ngFor="let type of pres.type;let j = index">
+                                                    <mat-radio-button style="display: block" (change)="typeChanged(j,i)"
+                                                        [value]="type.selected">{{type.name}}
+                                                    </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="example-full-width">
+                                                <input type="number" matInput placeholder="Days"
+                                                    [(ngModel)]="pres.days">
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center">
+                                                <mat-checkbox [(ngModel)]="pres.breakfast.value">{{pres.breakfast.time}}
+                                                </mat-checkbox>
+                                                <div *ngIf="pres.breakfast.value">
+                                                    <button (click)="pres.breakfast.time = 'Before'"
+                                                        style="margin-right: 3px;margin-bottom:3px" mat-raised-button
+                                                        color="Primary">Before Food</button>
+                                                    <button (click)="pres.breakfast.time = 'After'" mat-raised-button
+                                                        color="Primary">After Food</button>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center">
+                                                <mat-checkbox [(ngModel)]="pres.lunch.value">{{pres.lunch.time}}
+                                                </mat-checkbox>
+                                                <div *ngIf="pres.lunch.value">
+                                                    <button (click)="pres.lunch.time = 'Before'"
+                                                        style="margin-right: 3px;margin-bottom:3px" mat-raised-button
+                                                        color="Primary">Before Food</button>
+                                                    <button (click)="pres.lunch.time = 'After'" mat-raised-button
+                                                        color="Primary">After Food</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center">
+                                                <mat-checkbox [(ngModel)]="pres.evening.value">{{pres.evening.time}}
+                                                </mat-checkbox>
+                                                <div *ngIf="pres.evening.value">
+                                                    <button (click)="pres.evening.time = 'Before'"
+                                                        style="margin-right: 3px;margin-bottom:3px" mat-raised-button
+                                                        color="Primary">Before Food</button>
+                                                    <button (click)="pres.evening.time = 'After'" mat-raised-button
+                                                        color="Primary">After Food</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="text-align: center">
+                                                <mat-checkbox [(ngModel)]="pres.dinner.value">{{pres.dinner.time}}
+                                                </mat-checkbox>
+                                                <div *ngIf="pres.dinner.value">
+                                                    <button (click)="pres.dinner.time = 'Before'"
+                                                        style="margin-right: 3px;margin-bottom:3px" mat-raised-button
+                                                        color="Primary">Before Food</button>
+                                                    <button (click)="pres.dinner.time = 'After'" mat-raised-button
+                                                        color="Primary">After Food</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{pres.total}}
+                                        </td>
+                                        <td>
+                                            <a (click)="savePres(pres,i)" style="margin-right: 3px;margin-bottom:3px"
+                                                mat-raised-button color="primary">Save</a>
+                                            <a (click)="deletePres(pres,i)" mat-raised-button color="warn">Delete</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <button (click)="prescriptionNewLine()" mat-raised-button color="primary">Add New</button>
                     </div>
                     <mat-action-row>
                         <button (click)="Save()" mat-raised-button color="primary">Save</button>
@@ -46,12 +176,98 @@
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
                                 <div>
+                                    <h3>Consultation Questions</h3>
                                     <!-- <app-treepattern [myTreeData]="visit.questions"></app-treepattern> -->
                                     <div *ngFor="let question of visit.questions;let i=index">
                                         <h4 style="margin: 5px">{{i+1}}, {{question.name}}</h4>
                                         <div *ngIf="question.childrens.length > 0">
                                             <app-questionloop [children]="question.childrens"></app-questionloop>
                                         </div>
+                                    </div>
+                                </div>
+                                <div style="margin:25px 0px">
+                                    <h3>Consultation Summary</h3>
+                                    <div>
+                                        <mat-form-field disabled="true" [style.fontSize]="'20px'" style="width:100%">
+                                            <textarea disabled="true" [(ngModel)]="visit.consultationSummary" matInput
+                                                cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                                                cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div style="margin:25px 0px">
+                                    <h3>Prescription</h3>
+                                    <div>
+                                        <table class="table table-striped table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No</th>
+                                                    <th>Name</th>
+                                                    <th>Type</th>
+                                                    <th>Days</th>
+                                                    <th style="text-align: center">Breakfast</th>
+                                                    <th style="text-align: center">Lunch</th>
+                                                    <th style="text-align: center">Evening</th>
+                                                    <th style="text-align: center">Dinner</th>
+                                                    <th>Total Tablets</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let pres of visit.prescription;let i = index">
+                                                    <td scope="row">
+                                                        {{i+1}}.
+                                                    </td>
+                                                    <td>
+                                                        {{pres.name}}
+                                                    </td>
+                                                    <td>
+                                                        <div *ngFor="let type of pres.type;let j = index">
+                                                            <div *ngIf="type.selected">
+                                                                {{type.name}}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {{pres.days}} day(s)
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align: center">
+                                                            <mat-checkbox disabled="true"
+                                                                [(ngModel)]="pres.breakfast.value">
+                                                                {{pres.breakfast.time}}</mat-checkbox>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align: center">
+                                                            <mat-checkbox disabled="true"
+                                                                [(ngModel)]="pres.lunch.value">{{pres.lunch.time}}
+                                                            </mat-checkbox>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align: center">
+                                                            <mat-checkbox disabled="true"
+                                                                [(ngModel)]="pres.evening.value">{{pres.evening.time}}
+                                                            </mat-checkbox>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div style="text-align: center">
+                                                            <mat-checkbox disabled="true"
+                                                                [(ngModel)]="pres.dinner.value">{{pres.dinner.time}}
+                                                            </mat-checkbox>
+
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        {{pres.total}}
+                                                    </td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </mat-expansion-panel>

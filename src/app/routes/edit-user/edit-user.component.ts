@@ -34,7 +34,7 @@ export class EditUserComponent implements OnInit {
     })
   }
   cancel(){
-
+this.dialogRef.close();
   }
   generatePassword() {
     var text = "";

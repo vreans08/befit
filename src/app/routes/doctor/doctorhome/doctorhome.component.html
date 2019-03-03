@@ -1,11 +1,17 @@
 <div class="container-fluid">
   <div class="row">
+      <div style="margin-bottom: 20px" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <button mat-raised-button [matMenuTriggerFor]="menu">Add</button>
+          <mat-menu #menu="matMenu">
+            <button (click)="addAdmin('patient')" mat-menu-item>New Patient</button>
+          </mat-menu>
+        </div>
     <div class="col-xl-12">
       <mat-card>
         <mat-card-header>
           <mat-card-title>Patients In Line</mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+        <mat-card-content *ngIf="doctorDetails?.nextInLine[0] != 'NA'">
           <div style="margin:0px 20px" class="row">
             <mat-card (click)="clickConsultation(patient)" style="margin-right:5px;"
               *ngFor="let patient of doctorDetails?.nextInLine" class="col-xl-2">
@@ -15,6 +21,9 @@
               </div>
             </mat-card>
           </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="doctorDetails?.nextInLine[0] == 'NA'">
+            <p>No Patients</p>
         </mat-card-content>
       </mat-card>
     </div>
@@ -43,7 +52,7 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div>
-                  <!-- <app-treepattern [myTreeData]="visit.questions"></app-treepattern> -->
+                    <h3>Consultation Questions</h3>
                   <div *ngFor="let question of consultationHistory.visitDetails.questions;let i=index">
                     <h4 style="margin: 5px">{{i+1}}, {{question.name}}</h4>
                     <div *ngIf="question.childrens.length > 0">
@@ -51,10 +60,98 @@
                     </div>
                   </div>
                 </div>
+                <div style="margin:25px 0px">
+                    <h3>Consultation Summary</h3>
+                    <div>
+                        <mat-form-field disabled="true" [style.fontSize]="'20px'" style="width:100%">
+                            <textarea disabled="true" [(ngModel)]="consultationHistory.visitDetails.consultationSummary" matInput
+                                cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+                                cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div style="margin:25px 0px">
+                    <h3>Prescription</h3>
+                    <div>
+                        <table class="table table-striped table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Days</th>
+                                    <th style="text-align: center">Breakfast</th>
+                                    <th style="text-align: center">Lunch</th>
+                                    <th style="text-align: center">Evening</th>
+                                    <th style="text-align: center">Dinner</th>
+                                    <th>Total Tablets</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pres of consultationHistory.visitDetails.prescription;let i = index">
+                                    <td scope="row">
+                                        {{i+1}}.
+                                    </td>
+                                    <td>
+                                        {{pres.name}}
+                                    </td>
+                                    <td>
+                                        <div *ngFor="let type of pres.type;let j = index">
+                                            <div *ngIf="type.selected">
+                                                {{type.name}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{pres.days}} day(s)
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center">
+                                            <mat-checkbox disabled="true"
+                                                [(ngModel)]="pres.breakfast.value">
+                                                {{pres.breakfast.time}}</mat-checkbox>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center">
+                                            <mat-checkbox disabled="true"
+                                                [(ngModel)]="pres.lunch.value">{{pres.lunch.time}}
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center">
+                                            <mat-checkbox disabled="true"
+                                                [(ngModel)]="pres.evening.value">{{pres.evening.time}}
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="text-align: center">
+                                            <mat-checkbox disabled="true"
+                                                [(ngModel)]="pres.dinner.value">{{pres.dinner.time}}
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{pres.total}}
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
               </mat-expansion-panel>
             </mat-accordion>
           </div>
         </mat-card-content>
+        <mat-card-content *ngIf="doctorDetails?.consultationHistory[0] == 'NA'">
+          <p>Patient History not available</p>
+      </mat-card-content>
       </mat-card>
     </div>
   </div>

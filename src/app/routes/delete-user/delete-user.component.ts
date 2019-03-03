@@ -32,7 +32,7 @@ export class DeleteUserComponent implements OnInit {
   }
 
   noDelete(){
-
+    this.dialogRef.close();
   }
 
 }
