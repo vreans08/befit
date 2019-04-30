@@ -1,6 +1,6 @@
 NGO Application
 
-BeFIT UI.
+BeReady UI.
 
 To run the application Locally:
 

@@ -4,13 +4,14 @@ import { CreateUserComponent } from '../../superadmin/create-user/create-user.co
 import { AddUserService } from '../../../shared/service/add-user.service';
 import { EditUserComponent } from '../../edit-user/edit-user.component';
 import { DeleteUserComponent } from '../../delete-user/delete-user.component';
+import { ViewdetailsComponent } from '../../viewdetails/viewdetails.component';
 @Component({
   selector: 'app-adminhome',
   templateUrl: './adminhome.component.html',
   styleUrls: ['./adminhome.component.scss']
 })
 export class AdminhomeComponent implements OnInit {
-  displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'role', 'phone', 'email', 'resetRequired','action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'role', 'phone', 'resetRequired','action'];
   DoctordataSource:any;
   PatientdataSource:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -86,6 +87,7 @@ export class AdminhomeComponent implements OnInit {
       'top': '10px'
 
     };
+    dialogConfig.autoFocus = false;
     dialogConfig.width = "500px";
     dialogConfig.data = {
       data: elm
@@ -129,6 +131,22 @@ export class AdminhomeComponent implements OnInit {
       }
     );
   }
+  viewDetails(data)
+  {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.position = {
+      'top': '10px'
 
+    };
+    dialogConfig.width = "500px";
+    dialogConfig.data = {
+      data: data
+    };
+    const dialogRef = this.dialog.open(ViewdetailsComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+      }
+    );
+  }
 
 }

@@ -57,16 +57,44 @@
           </div>
         </div>
 
-        <!-- <div style="width:100%">
+        <div *ngIf="editData.role == 'patient'" style="width:100%">
             <mat-form-field style="width:100%">
-              <input name="password" matInput placeholder="Password" [(ngModel)]="password" #password1="ngModel" required>
+              <input name="dob" matInput [(ngModel)]="editData.dob" (ngModelChange)="dobChange($event)" [matDatepicker]="picker" ngmo placeholder="Date Of Birth">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <div *ngIf="f.submitted && password1.invalid">
-              <mat-error *ngIf="password1.errors.required">
-                Password is required
-              </mat-error>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="age" matInput placeholder="Age(Years)" [(ngModel)]="editData.age" #age1="ngModel" disabled>
+            </mat-form-field>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%;    border: 1px solid #d8d8d8;
+          border-radius: 5px;
+          padding: 10px;">
+            <div style="width:30%">
+              <mat-label>Relationship Details</mat-label>
+              <mat-select appearance="outline" placeholder="Relationship Type" [(ngModel)]="editData.relationType" name="relationType">
+                <mat-option  value="Father">
+                  Father
+                </mat-option>
+                <mat-option  value="Mother">
+                  Mother
+                </mat-option>
+                <mat-option  value="Spouse">
+                  Spouse
+                </mat-option>
+              </mat-select>
             </div>
-          </div> -->
+            <div style="width:60%">
+              <mat-form-field appearance="outline">
+                <input name="relationName" matInput placeholder="Relationship Name" [(ngModel)]="editData.relationName" #relationName="ngModel">
+              </mat-form-field>
+            </div>
+           
+          </div>
 
         <div style="width:100%">
           <mat-form-field style="width:100%">
@@ -89,6 +117,46 @@
             </mat-error>
           </div>
         </div>
+
+        <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="bloodgroup" matInput placeholder="Blood Group" [(ngModel)]="editData.bloodgroup" #bloodgroup1="ngModel">
+            </mat-form-field>
+            <div *ngIf="f.submitted && bloodgroup1.invalid">
+              <mat-error *ngIf="bloodgroup1.errors.required">
+                Blood Group is required
+              </mat-error>
+            </div>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="whatsapp" matInput placeholder="Whatsapp" [(ngModel)]="editData.whatsapp" #whatsapp1="ngModel">
+            </mat-form-field>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="address" matInput placeholder="Address" [(ngModel)]="editData.address" #address1="ngModel" required>
+            </mat-form-field>
+            <div *ngIf="f.submitted && address1.invalid">
+              <mat-error *ngIf="address1.errors.required">
+                Address is required
+              </mat-error>
+            </div>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="referedBy" matInput placeholder="Refered By" [(ngModel)]="editData.referedBy" #referedBy1="ngModel">
+            </mat-form-field>
+          </div>
+  
+          <div *ngIf="editData.role == 'patient'" style="width:100%">
+            <mat-form-field style="width:100%">
+              <input name="reason" matInput placeholder="Visit Reason" [(ngModel)]="editData.reason" #reason1="ngModel">
+            </mat-form-field>
+          </div>
 
         <div style="width:100%">
           <mat-slide-toggle [labelPosition]="'before'" [checked]="editData.resetRequired" (toggleChange)="editData.resetRequired = !editData.resetRequired">Reset Required</mat-slide-toggle>

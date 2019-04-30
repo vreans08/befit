@@ -24,7 +24,7 @@ export class DeleteUserComponent implements OnInit {
       console.log(userData);
       if (userData["success"]) {
           this.snackBar.open(`Details Deleted successfuly`,'',{
-            duration: 2000
+            duration: 3000
           })
           this.dialogRef.close('success');
       }

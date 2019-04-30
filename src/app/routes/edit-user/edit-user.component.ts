@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { AddUserService } from '../../shared/service/add-user.service';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -17,6 +17,14 @@ export class EditUserComponent implements OnInit {
     this.editData = data.data;
   }
 
+  dobChange(event)
+  {
+    console.log(event);
+    var ageDifMs = Date.now() - event.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    console.log("Age is: ", Math.abs(ageDate.getUTCFullYear() - 1970)) ;
+    this.editData.age = Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
   ngOnInit() {
   }
   save() {
@@ -27,7 +35,7 @@ export class EditUserComponent implements OnInit {
       console.log(userData);
       if (userData["success"]) {
           this.snackBar.open(`Details Edited successfuly`,'',{
-            duration: 2000
+            duration: 3000
           })
           this.dialogRef.close('success');
       }

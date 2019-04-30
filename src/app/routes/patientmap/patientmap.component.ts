@@ -21,6 +21,14 @@ import { DoctorassignComponent } from '../doctorassign/doctorassign.component';
 })
 export class PatientmapComponent implements OnInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'phone', 'email'];
+  columnNames = {
+    firstName : 'First Name',
+    lastName : 'Last Name',
+    userId: 'User ID',
+    userName : 'User Name',
+    phone : 'Phone',
+    email : 'Email'
+  }
   DoctordataSource: any;
   PatientdataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -96,7 +104,7 @@ export class PatientmapComponent implements OnInit {
         this.addUser.postPatientList(data).subscribe(data => {
           this.getPatientList();
           this.snackBar.open("Doctor Assigned Successfully", '', {
-            duration: 2000
+            duration: 3000
           });
         })
           
@@ -142,7 +150,7 @@ export class PatientmapComponent implements OnInit {
               this.addUser.postPatientList(this.assignPatient).subscribe(data => {
                 this.getPatientList();
                 this.snackBar.open("Doctor Assigned Successfully", '', {
-                  duration: 2000
+                  duration: 3000
                 });
               })
             })

@@ -20,7 +20,7 @@ export class SettingsService {
         // App Settings
         // -----------------------------------
         this.app = {
-            name: 'BeFIT',
+            name: 'BeReady',
             description: 'Hospital',
             year: ((new Date()).getFullYear())
         };

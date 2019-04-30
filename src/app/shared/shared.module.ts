@@ -77,6 +77,7 @@ import { QuestionsService } from './service/questions.service';
 import { TreepatternComponent } from '../routes/treepattern/treepattern.component';
 import { QuestionloopComponent } from '../routes/questionloop/questionloop.component';
 import { ConsultationComponent } from '../routes/doctor/consultation/consultation.component';
+import { SortListPipe } from './pipes/sort-list.pipe';
 // https://angular.io/styleguide#!#04-10
 @NgModule({
     imports: [
@@ -159,7 +160,8 @@ import { ConsultationComponent } from '../routes/doctor/consultation/consultatio
         NowDirective,
         ScrollableDirective,
         JqcloudDirective,
-        FilterPipe
+        FilterPipe,
+        SortListPipe
     ],
     exports: [
         CommonModule,
@@ -168,6 +170,7 @@ import { ConsultationComponent } from '../routes/doctor/consultation/consultatio
         ReactiveFormsModule,
         TranslateModule,
         FilterPipe,
+        SortListPipe,
         TreepatternComponent,
         QuestionloopComponent,
         RouterModule,

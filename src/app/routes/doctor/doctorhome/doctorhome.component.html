@@ -13,7 +13,7 @@
         </mat-card-header>
         <mat-card-content *ngIf="doctorDetails?.nextInLine[0] != 'NA'">
           <div style="margin:0px 20px" class="row">
-            <mat-card (click)="clickConsultation(patient)" style="margin-right:5px;"
+            <mat-card   matTooltip="Click for consultation" (click)="clickConsultation(patient)" style="margin-right:5px;cursor: pointer !important"
               *ngFor="let patient of doctorDetails?.nextInLine" class="col-xl-2">
               <div>
                 <h4 style="margin: 0px">{{patient.patientFirstName + ' '+ patient.patientLastName | titlecase}}</h4>
@@ -35,12 +35,12 @@
         <mat-card-content *ngIf="doctorDetails?.consultationHistory[0] != 'NA'">
           <div>
               <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Filter by First Name" [(ngModel)]="filterData" >
+                  <input disabled matInput placeholder="Filter by First Name" [(ngModel)]="filterData" >
                 </mat-form-field>
           </div>
           <div>
             <mat-accordion>
-              <mat-expansion-panel style="margin-bottom: 5px;" *ngFor="let consultationHistory of doctorDetails?.consultationHistory | filter : filterData">
+              <mat-expansion-panel style="margin-bottom: 5px;" *ngFor="let consultationHistory of doctorDetails?.consultationHistory | filter : filterData | sortList : '-create_date'">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     <b style="margin-right: 3px">Name: </b>
@@ -52,26 +52,161 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div>
-                    <h3>Consultation Questions</h3>
+                    <h4>Consultation Questions</h4>
                   <div *ngFor="let question of consultationHistory.visitDetails.questions;let i=index">
-                    <h4 style="margin: 5px">{{i+1}}, {{question.name}}</h4>
+                    <h5 style="margin: 5px">{{i+1}}, {{question.name}}</h5>
                     <div *ngIf="question.childrens.length > 0">
                       <app-questionloop [children]="question.childrens"></app-questionloop>
                     </div>
                   </div>
                 </div>
+
+                
+                <div style="margin:20px 0px">
+                    <h4>Review of Systems</h4>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Headache" [(ngModel)]="consultationHistory.visitDetails.ros.headache">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Dizziness" [(ngModel)]="consultationHistory.visitDetails.ros.dizziness">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Appetite" [(ngModel)]="consultationHistory.visitDetails.ros.appetite">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Chest Pain" [(ngModel)]="consultationHistory.visitDetails.ros.chestPain">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Abdominal Pain"
+                                [(ngModel)]="consultationHistory.visitDetails.ros.abdominalPain">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="Weight" matInput placeholder="Menstrual Cycles"
+                                [(ngModel)]="consultationHistory.visitDetails.ros.menstrualCycles">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+
+               
+                <div style="margin:20px 0px">
+                    <h4>ON Examinations</h4>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="bp" matInput placeholder="BP" [(ngModel)]="consultationHistory.visitDetails.oe.bp">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="pules" matInput placeholder="Pules" [(ngModel)]="consultationHistory.visitDetails.oe.pules">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="heent" matInput placeholder="Heent" [(ngModel)]="consultationHistory.visitDetails.oe.heent">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="neck" matInput placeholder="Neck" [(ngModel)]="consultationHistory.visitDetails.oe.neck">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="respsystem" matInput placeholder="RESP System" [(ngModel)]="consultationHistory.visitDetails.oe.respsystem">
+                        </mat-form-field>
+                    </div>
+
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="heart" matInput placeholder="Heart" [(ngModel)]="consultationHistory.visitDetails.oe.heart">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="abdomen" matInput placeholder="Abdomen" [(ngModel)]="consultationHistory.visitDetails.oe.abdomen">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="extremities" matInput placeholder="Extremities"
+                                [(ngModel)]="consultationHistory.visitDetails.oe.extremities">
+                        </mat-form-field>
+                    </div>
+
+
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="gentalia" matInput placeholder="gentalia" [(ngModel)]="consultationHistory.visitDetails.oe.gentalia">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="breast" matInput placeholder="Breast" [(ngModel)]="consultationHistory.visitDetails.oe.breast">
+                        </mat-form-field>
+                    </div>
+                    <div style="width:100%">
+                        <mat-form-field>
+                            <input disabled name="feet" matInput placeholder="Feet" [(ngModel)]="consultationHistory.visitDetails.oe.feet">
+                        </mat-form-field>
+                    </div>
+
+
+
+                </div>
+
+                
+                <div style="margin:20px 0px">
+                    <h4>Lab Reports</h4>
+                    <mat-form-field [style.fontSize]="'20px'" style="width:100%">
+                        <textarea disabled [(ngModel)]="consultationHistory.visitDetails.labReports" matInput cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"
+                            placeholder="Lab Reports"></textarea>
+                    </mat-form-field>
+                </div>
+                
+                <div style="margin:20px 0px">
+                    <h4>Impressions</h4>
+                    <mat-form-field [style.fontSize]="'20px'" style="width:100%">
+                        <textarea disabled [(ngModel)]="consultationHistory.visitDetails.impressions" matInput cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"
+                            placeholder="Impressions"></textarea>
+                    </mat-form-field>
+                </div>
+                
+                <div style="margin:20px 0px">
+                    <h4>Recommendations</h4>
+                    <mat-form-field [style.fontSize]="'20px'" style="width:100%">
+                        <textarea disabled [(ngModel)]="consultationHistory.visitDetails.recommendations" matInput cdkTextareaAutosize
+                            #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"
+                            placeholder="Recommendations"></textarea>
+                    </mat-form-field>
+                </div>
+
+
                 <div style="margin:25px 0px">
-                    <h3>Consultation Summary</h3>
+                    <h4>Consultation Summary</h4>
                     <div>
                         <mat-form-field disabled="true" [style.fontSize]="'20px'" style="width:100%">
-                            <textarea disabled="true" [(ngModel)]="consultationHistory.visitDetails.consultationSummary" matInput
+                            <textarea disabled disabled="true" [(ngModel)]="consultationHistory.visitDetails.consultationSummary" matInput
                                 cdkTextareaAutosize #autosize="cdkTextareaAutosize"
                                 cdkAutosizeMinRows="2" cdkAutosizeMaxRows="20"></textarea>
                         </mat-form-field>
                     </div>
                 </div>
                 <div style="margin:25px 0px">
-                    <h3>Prescription</h3>
+                    <h4>Prescription</h4>
                     <div>
                         <table class="table table-striped table-responsive">
                             <thead>

@@ -19,6 +19,7 @@ import { AdminModule } from './admin/admin.module';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { DeleteUserComponent } from './delete-user/delete-user.component';
 import { CreateUserComponent } from './superadmin/create-user/create-user.component';
+import { ViewdetailsComponent } from './viewdetails/viewdetails.component';
 
 @NgModule({
     imports: [
@@ -30,11 +31,11 @@ import { CreateUserComponent } from './superadmin/create-user/create-user.compon
         SuperadminModule,
         AdminModule
     ],
-    declarations: [PatientmapComponent,CreateUserComponent, AddquestionsComponent, DoctorassignComponent, EditUserComponent, DeleteUserComponent],
+    declarations: [PatientmapComponent,CreateUserComponent, AddquestionsComponent, DoctorassignComponent, EditUserComponent, DeleteUserComponent, ViewdetailsComponent],
     exports: [
         RouterModule,
     ],
-    entryComponents: [DoctorassignComponent,DeleteUserComponent,EditUserComponent,CreateUserComponent]
+    entryComponents: [DoctorassignComponent,DeleteUserComponent,EditUserComponent,CreateUserComponent,ViewdetailsComponent]
 })
 
 export class RoutesModule {

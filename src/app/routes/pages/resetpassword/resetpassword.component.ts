@@ -25,7 +25,7 @@ export class ResetpasswordComponent implements OnInit {
   }
 
   resetPassword() {
-    if(this.newPassword === this.confirmNewPassword)
+    if(this.newPassword === this.confirmNewPassword && this.newPassword != this.oldPassword && this.newPassword.length >= 6)
     {
       let resetData = {
         role: this.data.role,
@@ -45,15 +45,27 @@ export class ResetpasswordComponent implements OnInit {
         else
         {
           this.snackBar.open("Incorrect Details. Please try again.",'',{
-            duration: 2000
+            duration: 3000
           })
         }
       })
     }
-    else
+    else if(this.newPassword != this.confirmNewPassword )
     {
-      this.snackBar.open("New Password doesn't match with the confirm password",'',{
-        duration: 2000
+      this.snackBar.open("New Password doesn't match with the confirm password. Please try again",'',{
+        duration: 3000
+      })
+    }
+    else if(this.newPassword != this.oldPassword )
+    {
+      this.snackBar.open("New password should not be same as old password. Please try again",'',{
+        duration: 3000
+      })
+    }
+    else if( this.newPassword.length < 6 )
+    {
+      this.snackBar.open("New password length should be greater than 5 characters. Please try again",'',{
+        duration: 3000
       })
     }
  

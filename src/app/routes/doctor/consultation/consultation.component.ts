@@ -29,6 +29,15 @@ export class ConsultationComponent implements OnInit {
       {
         name: "Tablet",
         selected: false
+      },
+      {
+        name: "Cream",
+        selected: false
+      }
+      ,
+      {
+        name: "Other",
+        selected: false
       }
     ],
     days: 0,
@@ -53,6 +62,82 @@ export class ConsultationComponent implements OnInit {
   doctorDetails: any = {};
   consultationSummary:any;
   doctorHistoryDetails: any;
+  ros:any = {
+    headache : '',
+    dizziness : '',
+    appetite : '',
+    chestPain : '',
+    abdominalPain : '',
+    menstrualCycles : ''
+  };
+  pmh:any = {
+    dm:'',
+    htn:'',
+    heartDisease:'',
+    thyroid:'',
+    asthma:'',
+    surgeries:'',
+    allergies:'',
+    obstetricHistory: '',
+    grav:'',
+    para:'',
+    abortion:'',
+    live:''
+  }
+  oe:any = {
+    bp:'',
+    pules:'',
+    heent:'',
+    neck:'',
+    respSystem:'',
+    heart:'',
+    abdomen:'',
+    extremities:'',
+    gentalia:'',
+    breast:'',
+    feet:''
+  };
+  familyHistory:any = [
+    {
+      name: 'DM',
+      father: false,
+      mother: false,
+      siblings: false
+    },
+    {
+      name: 'HTN',
+      father: false,
+      mother: false,
+      siblings: false
+    },
+    {
+      name: 'HEART DISEASE',
+      father: false,
+      mother: false,
+      siblings: false
+    },
+    {
+      name: 'KIDNEY DISEASE',
+      father: false,
+      mother: false,
+      siblings: false
+    },
+    {
+      name: 'ASTHMA',
+      father: false,
+      mother: false,
+      siblings: false
+    },
+    {
+      name: 'OTHERS',
+      father: false,
+      mother: false,
+      siblings: false
+    }
+  ]
+  labReports:any;
+  impressions:any;
+  recommendations:any;
   consultationForm: boolean = true;
   typeSelection:any;
   title = 'Ngx-tree-dnd example';
@@ -133,6 +218,8 @@ export class ConsultationComponent implements OnInit {
         element.questions = JSON.parse(element.questions);
       });
       this.patientDetails = details;
+      this.pmh = this.patientDetails.pmh  ? this.patientDetails.pmh : this.pmh;
+      this.familyHistory = this.patientDetails.familyHistory.length > 0  ? this.patientDetails.familyHistory : this.familyHistory;
       console.log('History questions', this.patientDetails.visitHistory);
       console.log("Patient Details: ", details)
       this.questions.getQuestions().subscribe(cons => {
@@ -221,8 +308,15 @@ export class ConsultationComponent implements OnInit {
       Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
       questions: JSON.stringify(this.myTree),
       consultationSummary : this.consultationSummary,
-      prescription: this.prescription
+      prescription: this.prescription,
+      oe : this.oe,
+      labReports : this.labReports,
+      ros : this.ros,
+      recommendations : this.recommendations,
+      impressions : this.impressions
     });
+    patientDetails.pmh = this.pmh;
+    patientDetails.familyHistory = this.familyHistory;
     patientDetails.lastVisitedDate = moment().format('YYYY-MM-DD');
     patientDetails.nextAppointmentDate = 'NA';
     patientDetails.nextAppointmentDoctor = 'NA';
@@ -238,7 +332,12 @@ export class ConsultationComponent implements OnInit {
         Doctor: this.doctorDetails.userId + ' - ' + this.doctorDetails.firstName,
         questions: JSON.stringify(this.myTree),
         consultationSummary : this.consultationSummary,
-        prescription: this.prescription
+        prescription: this.prescription,
+        oe : this.oe,
+        labReports : this.labReports,
+        ros : this.ros,
+        recommendations : this.recommendations,
+        impressions : this.impressions
       }
     };
     this.updateUser.postPatientList(patientDetails).subscribe(data => {
@@ -262,7 +361,7 @@ export class ConsultationComponent implements OnInit {
       console.log("Log data After ", this.doctorHistoryDetails);
       this.updateUser.postDoctorList(this.doctorHistoryDetails).subscribe(docdata => {
         this.snackBar.open("Form submitted successfully", '', {
-          duration: 2000
+          duration: 3000
         });
         this.router.navigate(['/doctorhome']);
       })
@@ -282,6 +381,14 @@ export class ConsultationComponent implements OnInit {
         },
         {
           name: "Tablet",
+          selected: false
+        },
+        {
+          name: "Cream",
+          selected: false
+        },
+        {
+          name: "Other",
           selected: false
         }
       ],

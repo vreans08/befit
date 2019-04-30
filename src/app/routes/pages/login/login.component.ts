@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
                     }
                     else {
                         this.snackbar.open('Welcome ' + loginData["firstName"], '', {
-                            duration: 2000
+                            duration: 3000
                         });
                         this.dataService.setLoginData(loginData);
                         if (loginData["role"] == "superAdmin")
@@ -55,9 +55,9 @@ export class LoginComponent implements OnInit {
                 }
 
                 else
-                    this.snackbar.open('Login failed.', '', {
+                    this.snackbar.open('Login Failed - Invalid Credentials… Please Try Again', '', {
                         panelClass: "loginFail",
-                        duration: 2000
+                        duration: 3000
                     })
             })
         else if (this.role == 'admin') {
@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
                     else {
                         console.log("Resest Required ", loginData);
                         this.snackbar.open('Welcome ' + loginData["firstName"], '', {
-                            duration: 2000
+                            duration: 3000
                         });
                         this.dataService.setLoginData(loginData);
                         if (loginData["role"] == "admin")
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
                 else
                     this.snackbar.open('Login failed.', '', {
                         panelClass: "loginFail",
-                        duration: 2000
+                        duration: 3000
                     })
             });
         }
@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
                     else {
                         console.log("Resest Required ", loginData);
                         this.snackbar.open('Welcome ' + loginData["firstName"], '', {
-                            duration: 2000
+                            duration: 3000
                         });
                         this.dataService.setLoginData(loginData);
                         if (loginData["role"] == "doctor")
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
                 else
                     this.snackbar.open('Login failed.', '', {
                         panelClass: "loginFail",
-                        duration: 2000
+                        duration: 3000
                     })
             });
         }
@@ -131,7 +131,7 @@ export class LoginComponent implements OnInit {
                     else {
                         console.log("Resest Required ", loginData);
                         this.snackbar.open('Welcome ' + loginData["firstName"], '', {
-                            duration: 2000
+                            duration: 3000
                         });
                         this.dataService.setLoginData(loginData);
                         if (loginData["role"] == "patient")
@@ -145,7 +145,7 @@ export class LoginComponent implements OnInit {
                 else
                     this.snackbar.open('Login failed.', '', {
                         panelClass: "loginFail",
-                        duration: 2000
+                        duration: 3000
                     })
             });
         }
@@ -170,6 +170,9 @@ export class LoginComponent implements OnInit {
                     this.role = '';
                     this.userName = '';
                     this.password = '';
+                    this.snackbar.open("Password reset successful. Please login to continue.",'',{
+                        duration: 3000
+                    })
                 }
 
             }

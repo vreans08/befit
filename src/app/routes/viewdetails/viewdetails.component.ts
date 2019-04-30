@@ -1,15 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { AddUserService } from '../../shared/service/add-user.service';
 import { HttpClient } from '@angular/common/http';
-import { AddUserService } from '../../../shared/service/add-user.service';
-import { element } from '@angular/core/src/render3';
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.scss']
+  selector: 'app-viewdetails',
+  templateUrl: './viewdetails.component.html',
+  styleUrls: ['./viewdetails.component.scss']
 })
-export class CreateUserComponent implements OnInit {
+export class ViewdetailsComponent implements OnInit {
 
   public userName: any;
   public userId: any;
@@ -48,17 +47,15 @@ export class CreateUserComponent implements OnInit {
 
 
   public data: any;
-  constructor(private dialogRef: MatDialogRef<CreateUserComponent>, private _http: HttpClient, public snackBar: MatSnackBar
+  constructor(private dialogRef: MatDialogRef<ViewdetailsComponent>, private _http: HttpClient, public snackBar: MatSnackBar
     , @Inject(MAT_DIALOG_DATA) data, public adduser: AddUserService) {
-    this.role = data.role;
-    this.doctorList = data.doctorList;
-    this.patientList = data.patientList;
-    this.adminList = data.adminList;
+    this.patientList = data.data;
+  
   }
 
   ngOnInit() {
   }
-  cancel() {
+  close() {
     this.dialogRef.close();
   }
   save() {
@@ -175,4 +172,5 @@ export class CreateUserComponent implements OnInit {
     console.log("Age is: ", Math.abs(ageDate.getUTCFullYear() - 1970)) ;
     this.age = Math.abs(ageDate.getUTCFullYear() - 1970);
   }
+
 }

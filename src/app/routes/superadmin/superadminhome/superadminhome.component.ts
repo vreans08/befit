@@ -12,6 +12,17 @@ import { DeleteUserComponent } from '../../delete-user/delete-user.component';
 })
 export class SuperadminhomeComponent implements OnInit {
   displayedColumns: string[] = ['firstName', 'lastName', 'userId', 'userName', 'role', 'phone', 'email', 'resetRequired','action'];
+  columnNames = {
+    firstName : 'First Name',
+    lastName : 'Last Name',
+    userId: 'User ID',
+    role : 'Role',
+    resetRequired: 'Reset Required',
+    action: 'Action',
+    userName : 'User Name',
+    phone : 'Phone',
+    email : 'Email'
+  }
   AdmindataSource: any;
   DoctordataSource:any;
   PatientdataSource:any;
